@@ -1,0 +1,78 @@
+{
+  "parameters":{
+     "endpoint":"https://contoso.communications.azure.com",
+     "api-version":"2022-04-07-preview",
+     "callConnectionId":"18dea47f-b081-4107-9a5c-4300819d2c6c",
+     "addParticipantsRequest ":{
+        "sourceCallerId":{
+           "value":"+18331231234"
+        },
+        "participantsToAdd":[
+           {
+              "communicationUser":{
+                 "id":"8:acs:b9614373-fd0b-480c-8fd2-cb58b70eab9f_387c0153-3b4d-4779-9ee3-a6e2440df075"
+              }
+           }
+        ],
+        "invitationTimeoutInSeconds":60,
+        "operationContext":"5161f20a-7225-4a74-a529-efaf8e7b351d"
+     }
+  },
+  "responses":{
+     "202":{
+        "body":{
+           "participants":[
+              {
+                 "identifier":{
+                    "communicationUser":{
+                       "id":"8:acs:b9614373-fd0b-480c-8fd2-cb58b70eab9f_387c0153-3b4d-4779-9ee3-a6e2440df075"
+                    }
+                 },
+                 "isMuted":true
+              }
+           ],
+           "operationContext":"5161f20a-7225-4a74-a529-efaf8e7b351d"
+        }
+     },
+     "400": {
+       "body": {
+         "error": {
+           "code": "400",
+           "message": "The request contains invalid data."
+         }
+       }
+     },
+     "401": {
+       "body": {
+         "error": {
+           "code": "401",
+           "message": "Request is not authorized."
+         }
+       }
+     },
+     "403": {
+       "body": {
+         "error": {
+           "code": "403",
+           "message": "User is not allowed to perform specified action."
+         }
+       }
+     },
+     "404": {
+       "body": {
+         "error": {
+           "code": "404",
+           "message": "Resource not found on the server."
+         }
+       }
+     },
+     "500": {
+       "body": {
+         "error": {
+           "code": "500",
+           "message": "Internal server error."
+         }
+       }
+     }
+  }
+}
