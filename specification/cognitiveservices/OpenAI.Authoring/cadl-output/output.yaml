@@ -1,0 +1,4581 @@
+clients:
+- apiVersions: []
+  builderPadName: open_ai
+  description: API for managing and utilizing Azure Open AI endpoints.
+  legacyFilename: open_ai_client
+  name: OpenAIClient
+  operationGroups:
+  - className: OpenAIClientOperationsMixin
+    clientName: OpenAIClient
+    operations:
+    - apiVersions:
+      - null
+      description: Gets the list of deployments owned by the Azure OpenAI resource.
+      discriminator: basic
+      exceptions:
+      - discriminator: basic
+        headers: []
+        statusCodes:
+        - default
+      groupName: ''
+      isOverload: false
+      method: GET
+      name: list_deployments
+      overloads: []
+      parameters:
+      - &id015
+        clientName: endpoint
+        description: 'Supported Cognitive Services endpoints (protocol and hostname,
+          for example:
+
+          https://westus.api.cognitive.microsoft.com).'
+        implementation: Client
+        inOverload: false
+        location: endpointPath
+        optional: false
+        restApiName: endpoint
+        skipUrlEncoding: true
+        type: &id003
+          type: string
+      - &id033
+        clientDefaultValue: 2022-06-01-preview
+        clientName: api_version
+        description: The API version to use for this operation.
+        implementation: Client
+        inOverload: false
+        in_docstring: false
+        location: query
+        optional: false
+        restApiName: api-version
+        skipUrlEncoding: false
+        type: &id007
+          apiVersions: []
+          clientDefaultValue: null
+          type: constant
+          value: 2022-06-01-preview
+          valueType: &id001
+            type: string
+          xmlMetadata: {}
+      - checkClientInput: false
+        clientDefaultValue: application/json
+        clientName: accept
+        delimiter: null
+        description: Accept header.
+        explode: false
+        groupedBy: null
+        implementation: Method
+        inDocstring: true
+        inOverload: false
+        inOverriden: false
+        location: header
+        optional: false
+        restApiName: Accept
+        skipUrlEncoding: false
+        type: &id008
+          apiVersions: []
+          clientDefaultValue: null
+          type: constant
+          value: application/json
+          valueType: *id001
+          xmlMetadata: {}
+      responses:
+      - discriminator: operation
+        headers: []
+        statusCodes:
+        - 200
+        type: &id035
+          base: dpg
+          description: DeploymentList.
+          discriminatedSubtypes: {}
+          name: DeploymentList
+          parents: []
+          properties:
+          - clientName: object
+            description: Defines the type of this object.
+            optional: true
+            readonly: false
+            restApiName: object
+            type: &id036
+              type: constant
+              value: deployment
+              valueType:
+                type: string
+          - clientName: data
+            description: The list of Deployments.
+            optional: true
+            readonly: false
+            restApiName: data
+            type: &id041
+              elementType: &id006
+                base: dpg
+                description: 'Deployments manage the reserved quota for Azure OpenAI
+                  models and make them
+
+                  available for inference requests.'
+                discriminatedSubtypes: {}
+                name: Deployment
+                parents: []
+                properties:
+                - clientName: object
+                  description: Defines the type of an object.
+                  optional: true
+                  readonly: true
+                  restApiName: object
+                  type: &id010
+                    type: string
+                - clientName: status
+                  description: The state of a job or item.
+                  optional: false
+                  readonly: true
+                  restApiName: status
+                  type: &id011
+                    description: State.
+                    name: State
+                    snakeCaseName: state
+                    type: enum
+                    valueType:
+                      type: string
+                    values:
+                    - description: ''
+                      name: NOT_RUNNING
+                      value: notRunning
+                    - description: ''
+                      name: RUNNING
+                      value: running
+                    - description: ''
+                      name: SUCCEEDED
+                      value: succeeded
+                    - description: ''
+                      name: CANCELED
+                      value: canceled
+                    - description: ''
+                      name: FAILED
+                      value: failed
+                    - description: ''
+                      name: DELETED
+                      value: deleted
+                - clientName: created_at
+                  description: A timestamp when this job or item was created (in unix
+                    epochs).
+                  optional: false
+                  readonly: true
+                  restApiName: created_at
+                  type: &id002
+                    type: integer
+                - clientName: updated_at
+                  description: A timestamp when this job or item was modified last
+                    (in unix epochs).
+                  optional: false
+                  readonly: true
+                  restApiName: updated_at
+                  type: *id002
+                - clientName: id
+                  description: The identifier of the deployment.
+                  optional: false
+                  pylintDisable: redefined-builtin
+                  readonly: true
+                  restApiName: id
+                  type: *id003
+                - clientName: model
+                  description: The OpenAI model to deploy. Can be a base model or
+                    a fine tune.
+                  optional: false
+                  readonly: false
+                  restApiName: model
+                  type: *id003
+                - clientName: owner
+                  description: 'The owner of this deployment. For Azure OpenAI only
+                    "organization-owner" is
+
+                    supported.'
+                  optional: true
+                  readonly: true
+                  restApiName: owner
+                  type: *id003
+                - clientName: scale_settings
+                  description: 'The scale settings of a deployment. It defines the
+                    modes for scaling and the
+
+                    reserved capacity.'
+                  optional: false
+                  readonly: false
+                  restApiName: scale_settings
+                  type: &id004
+                    base: dpg
+                    description: 'The scale settings of a deployment. It defines the
+                      modes for scaling and the
+
+                      reserved capacity.'
+                    discriminatedSubtypes:
+                      manual: &id037
+                        base: dpg
+                        description: Settings for the manual scale type.
+                        discriminatedSubtypes: {}
+                        discriminatorValue: manual
+                        name: ManualScaleSettings
+                        parents:
+                        - *id004
+                        properties:
+                        - clientName: capacity
+                          description: The constant reserved capacity of the inference
+                            endpoint for this deployment.
+                          optional: false
+                          readonly: false
+                          restApiName: capacity
+                          type: *id002
+                        - clientName: scale_type
+                          description: Defines how scaling operations will be executed.
+                          isDiscriminator: true
+                          optional: false
+                          readonly: false
+                          restApiName: scale_type
+                          type: &id038
+                            type: constant
+                            value: manual
+                            valueType:
+                              type: string
+                        snakeCaseName: manual_scale_settings
+                        type: model
+                      standard: &id039
+                        base: dpg
+                        description: Settings for the standard scale type.
+                        discriminatedSubtypes: {}
+                        discriminatorValue: standard
+                        name: StandardScaleSettings
+                        parents:
+                        - *id004
+                        properties:
+                        - clientName: scale_type
+                          description: Defines how scaling operations will be executed.
+                          isDiscriminator: true
+                          optional: false
+                          readonly: false
+                          restApiName: scale_type
+                          type: &id040
+                            type: constant
+                            value: standard
+                            valueType: &id005
+                              type: string
+                        snakeCaseName: standard_scale_settings
+                        type: model
+                    name: ScaleSettings
+                    parents: []
+                    properties:
+                    - clientName: scale_type
+                      description: ''
+                      isDiscriminator: true
+                      isPolymorphic: true
+                      optional: false
+                      readonly: false
+                      restApiName: scale_type
+                      type:
+                        type: constant
+                        value: null
+                        valueType: *id005
+                    snakeCaseName: scale_settings
+                    type: model
+                snakeCaseName: deployment
+                type: model
+              type: list
+          snakeCaseName: deployment_list
+          type: model
+      summary: Gets the list of deployments owned by the Azure OpenAI resource.
+      url: /deployments
+    - apiVersions:
+      - null
+      bodyParameter:
+        clientName: body
+        contentTypes:
+        - application/json
+        defaultContentType: application/json
+        description: ''
+        inOverload: false
+        location: body
+        optional: false
+        restApiName: body
+        type: &id063
+          type: combined
+          types:
+          - *id006
+          - &id012
+            type: any-object
+          - &id014
+            type: binary
+      description: 'Creates a new deployment for the Azure OpenAI resource according
+        to the given
+
+        specification.'
+      discriminator: basic
+      exceptions:
+      - discriminator: basic
+        headers: []
+        statusCodes:
+        - default
+      groupName: ''
+      isOverload: false
+      method: POST
+      name: create_deployment
+      overloads:
+      - apiVersions:
+        - null
+        bodyParameter:
+          clientName: body
+          contentTypes:
+          - application/json
+          defaultContentType: application/json
+          description: ''
+          inOverload: false
+          location: body
+          optional: false
+          restApiName: body
+          type: *id006
+        description: 'Creates a new deployment for the Azure OpenAI resource according
+          to the given
+
+          specification.'
+        discriminator: basic
+        exceptions:
+        - discriminator: basic
+          headers: []
+          statusCodes:
+          - default
+        groupName: ''
+        isOverload: true
+        method: POST
+        name: create_deployment
+        overloads: []
+        parameters:
+        - clientName: endpoint
+          description: 'Supported Cognitive Services endpoints (protocol and hostname,
+            for example:
+
+            https://westus.api.cognitive.microsoft.com).'
+          implementation: Client
+          inOverload: false
+          location: endpointPath
+          optional: false
+          restApiName: endpoint
+          skipUrlEncoding: true
+          type: *id003
+        - clientDefaultValue: 2022-06-01-preview
+          clientName: api_version
+          description: The API version to use for this operation.
+          implementation: Client
+          inOverload: false
+          in_docstring: false
+          location: query
+          optional: false
+          restApiName: api-version
+          skipUrlEncoding: false
+          type: *id007
+        - checkClientInput: false
+          clientDefaultValue: application/json
+          clientName: accept
+          delimiter: null
+          description: Accept header.
+          explode: false
+          groupedBy: null
+          implementation: Method
+          inDocstring: true
+          inOverload: false
+          inOverriden: false
+          location: header
+          optional: false
+          restApiName: Accept
+          skipUrlEncoding: false
+          type: *id008
+        - checkClientInput: false
+          clientDefaultValue: application/json
+          clientName: content_type
+          delimiter: null
+          description: Body Parameter content-type. Content type parameter for JSON
+            body.
+          implementation: Method
+          inDocstring: true
+          inOverload: true
+          inOverriden: false
+          location: header
+          optional: true
+          restApiName: Content-Type
+          type: *id001
+        responses:
+        - discriminator: operation
+          headers:
+          - restApiName: Location
+            type: &id009
+              description: The location of an instance of Deployment
+              format: url
+              type: string
+          statusCodes:
+          - 201
+          type: &id013
+            base: dpg
+            description: Deployment.
+            discriminatedSubtypes: {}
+            name: Deployment
+            parents: []
+            properties:
+            - clientName: location
+              description: ''
+              optional: false
+              readonly: false
+              restApiName: location
+              type: *id009
+            - clientName: object
+              description: Defines the type of an object.
+              optional: true
+              readonly: true
+              restApiName: object
+              type: *id010
+            - clientName: status
+              description: The state of a job or item.
+              optional: false
+              readonly: true
+              restApiName: status
+              type: *id011
+            - clientName: created_at
+              description: A timestamp when this job or item was created (in unix
+                epochs).
+              optional: false
+              readonly: true
+              restApiName: created_at
+              type: *id002
+            - clientName: updated_at
+              description: A timestamp when this job or item was modified last (in
+                unix epochs).
+              optional: false
+              readonly: true
+              restApiName: updated_at
+              type: *id002
+            - clientName: id
+              description: The identifier of the deployment.
+              optional: false
+              pylintDisable: redefined-builtin
+              readonly: true
+              restApiName: id
+              type: *id003
+            - clientName: model
+              description: The OpenAI model to deploy. Can be a base model or a fine
+                tune.
+              optional: false
+              readonly: false
+              restApiName: model
+              type: *id003
+            - clientName: owner
+              description: 'The owner of this deployment. For Azure OpenAI only "organization-owner"
+                is
+
+                supported.'
+              optional: true
+              readonly: true
+              restApiName: owner
+              type: *id003
+            - clientName: scale_settings
+              description: 'The scale settings of a deployment. It defines the modes
+                for scaling and the
+
+                reserved capacity.'
+              optional: false
+              readonly: false
+              restApiName: scale_settings
+              type: *id004
+            snakeCaseName: deployment
+            type: model
+        summary: 'Creates a new deployment for the Azure OpenAI resource according
+          to the given
+
+          specification.'
+        url: /deployments
+      - apiVersions:
+        - null
+        bodyParameter:
+          clientName: body
+          contentTypes:
+          - application/json
+          defaultContentType: application/json
+          description: ''
+          inOverload: false
+          location: body
+          optional: false
+          restApiName: body
+          type: *id012
+        description: 'Creates a new deployment for the Azure OpenAI resource according
+          to the given
+
+          specification.'
+        discriminator: basic
+        exceptions:
+        - discriminator: basic
+          headers: []
+          statusCodes:
+          - default
+        groupName: ''
+        isOverload: true
+        method: POST
+        name: create_deployment
+        overloads: []
+        parameters:
+        - clientName: endpoint
+          description: 'Supported Cognitive Services endpoints (protocol and hostname,
+            for example:
+
+            https://westus.api.cognitive.microsoft.com).'
+          implementation: Client
+          inOverload: false
+          location: endpointPath
+          optional: false
+          restApiName: endpoint
+          skipUrlEncoding: true
+          type: *id003
+        - clientDefaultValue: 2022-06-01-preview
+          clientName: api_version
+          description: The API version to use for this operation.
+          implementation: Client
+          inOverload: false
+          in_docstring: false
+          location: query
+          optional: false
+          restApiName: api-version
+          skipUrlEncoding: false
+          type: *id007
+        - checkClientInput: false
+          clientDefaultValue: application/json
+          clientName: accept
+          delimiter: null
+          description: Accept header.
+          explode: false
+          groupedBy: null
+          implementation: Method
+          inDocstring: true
+          inOverload: false
+          inOverriden: false
+          location: header
+          optional: false
+          restApiName: Accept
+          skipUrlEncoding: false
+          type: *id008
+        - checkClientInput: false
+          clientDefaultValue: application/json
+          clientName: content_type
+          delimiter: null
+          description: Body Parameter content-type. Content type parameter for JSON
+            body.
+          implementation: Method
+          inDocstring: true
+          inOverload: true
+          inOverriden: false
+          location: header
+          optional: true
+          restApiName: Content-Type
+          type: *id001
+        responses:
+        - discriminator: operation
+          headers:
+          - restApiName: Location
+            type: *id009
+          statusCodes:
+          - 201
+          type: *id013
+        summary: 'Creates a new deployment for the Azure OpenAI resource according
+          to the given
+
+          specification.'
+        url: /deployments
+      - apiVersions:
+        - null
+        bodyParameter:
+          clientName: body
+          contentTypes:
+          - application/json
+          defaultContentType: application/json
+          description: ''
+          inOverload: false
+          location: body
+          optional: false
+          restApiName: body
+          type: *id014
+        description: 'Creates a new deployment for the Azure OpenAI resource according
+          to the given
+
+          specification.'
+        discriminator: basic
+        exceptions:
+        - discriminator: basic
+          headers: []
+          statusCodes:
+          - default
+        groupName: ''
+        isOverload: true
+        method: POST
+        name: create_deployment
+        overloads: []
+        parameters:
+        - clientName: endpoint
+          description: 'Supported Cognitive Services endpoints (protocol and hostname,
+            for example:
+
+            https://westus.api.cognitive.microsoft.com).'
+          implementation: Client
+          inOverload: false
+          location: endpointPath
+          optional: false
+          restApiName: endpoint
+          skipUrlEncoding: true
+          type: *id003
+        - clientDefaultValue: 2022-06-01-preview
+          clientName: api_version
+          description: The API version to use for this operation.
+          implementation: Client
+          inOverload: false
+          in_docstring: false
+          location: query
+          optional: false
+          restApiName: api-version
+          skipUrlEncoding: false
+          type: *id007
+        - checkClientInput: false
+          clientDefaultValue: application/json
+          clientName: accept
+          delimiter: null
+          description: Accept header.
+          explode: false
+          groupedBy: null
+          implementation: Method
+          inDocstring: true
+          inOverload: false
+          inOverriden: false
+          location: header
+          optional: false
+          restApiName: Accept
+          skipUrlEncoding: false
+          type: *id008
+        - checkClientInput: false
+          clientDefaultValue: application/json
+          clientName: content_type
+          delimiter: null
+          description: Body Parameter content-type. Content type parameter for binary
+            body.
+          implementation: Method
+          inDocstring: true
+          inOverload: true
+          inOverriden: false
+          location: header
+          optional: true
+          restApiName: Content-Type
+          type: *id001
+        responses:
+        - discriminator: operation
+          headers:
+          - restApiName: Location
+            type: *id009
+          statusCodes:
+          - 201
+          type: *id013
+        summary: 'Creates a new deployment for the Azure OpenAI resource according
+          to the given
+
+          specification.'
+        url: /deployments
+      parameters:
+      - *id015
+      - clientDefaultValue: 2022-06-01-preview
+        clientName: api_version
+        description: The API version to use for this operation.
+        implementation: Client
+        inOverload: false
+        in_docstring: false
+        location: query
+        optional: false
+        restApiName: api-version
+        skipUrlEncoding: false
+        type: *id007
+      - checkClientInput: false
+        clientDefaultValue: application/json
+        clientName: accept
+        delimiter: null
+        description: Accept header.
+        explode: false
+        groupedBy: null
+        implementation: Method
+        inDocstring: true
+        inOverload: false
+        inOverriden: false
+        location: header
+        optional: false
+        restApiName: Accept
+        skipUrlEncoding: false
+        type: *id008
+      - checkClientInput: false
+        clientDefaultValue: null
+        clientName: content_type
+        delimiter: null
+        description: 'Body parameter Content-Type. Known values are: application/json.'
+        implementation: Method
+        inDocstring: true
+        inOverload: false
+        inOverriden: true
+        location: header
+        optional: true
+        restApiName: Content-Type
+        type: *id001
+      responses:
+      - discriminator: operation
+        headers:
+        - restApiName: Location
+          type: *id009
+        statusCodes:
+        - 201
+        type: *id013
+      summary: 'Creates a new deployment for the Azure OpenAI resource according to
+        the given
+
+        specification.'
+      url: /deployments
+    - apiVersions:
+      - null
+      description: Gets details for a single deployment specified by the given deployment_id.
+      discriminator: basic
+      exceptions:
+      - discriminator: basic
+        headers: []
+        statusCodes:
+        - default
+      groupName: ''
+      isOverload: false
+      method: GET
+      name: get_deployment
+      overloads: []
+      parameters:
+      - *id015
+      - clientName: deployment_id
+        description: The identifier of the deployment.
+        implementation: Method
+        inOverload: false
+        location: path
+        optional: false
+        restApiName: deploymentId
+        skipUrlEncoding: false
+        type: *id003
+      - clientDefaultValue: 2022-06-01-preview
+        clientName: api_version
+        description: The API version to use for this operation.
+        implementation: Client
+        inOverload: false
+        in_docstring: false
+        location: query
+        optional: false
+        restApiName: api-version
+        skipUrlEncoding: false
+        type: *id007
+      - checkClientInput: false
+        clientDefaultValue: application/json
+        clientName: accept
+        delimiter: null
+        description: Accept header.
+        explode: false
+        groupedBy: null
+        implementation: Method
+        inDocstring: true
+        inOverload: false
+        inOverriden: false
+        location: header
+        optional: false
+        restApiName: Accept
+        skipUrlEncoding: false
+        type: *id008
+      responses:
+      - discriminator: operation
+        headers: []
+        statusCodes:
+        - 200
+        type: &id042
+          base: dpg
+          description: Deployment.
+          discriminatedSubtypes: {}
+          name: Deployment
+          parents: []
+          properties:
+          - clientName: object
+            description: Defines the type of an object.
+            optional: true
+            readonly: true
+            restApiName: object
+            type: *id010
+          - clientName: status
+            description: The state of a job or item.
+            optional: false
+            readonly: true
+            restApiName: status
+            type: *id011
+          - clientName: created_at
+            description: A timestamp when this job or item was created (in unix epochs).
+            optional: false
+            readonly: true
+            restApiName: created_at
+            type: *id002
+          - clientName: updated_at
+            description: A timestamp when this job or item was modified last (in unix
+              epochs).
+            optional: false
+            readonly: true
+            restApiName: updated_at
+            type: *id002
+          - clientName: id
+            description: The identifier of the deployment.
+            optional: false
+            pylintDisable: redefined-builtin
+            readonly: true
+            restApiName: id
+            type: *id003
+          - clientName: model
+            description: The OpenAI model to deploy. Can be a base model or a fine
+              tune.
+            optional: false
+            readonly: false
+            restApiName: model
+            type: *id003
+          - clientName: owner
+            description: 'The owner of this deployment. For Azure OpenAI only "organization-owner"
+              is
+
+              supported.'
+            optional: true
+            readonly: true
+            restApiName: owner
+            type: *id003
+          - clientName: scale_settings
+            description: 'The scale settings of a deployment. It defines the modes
+              for scaling and the
+
+              reserved capacity.'
+            optional: false
+            readonly: false
+            restApiName: scale_settings
+            type: *id004
+          snakeCaseName: deployment
+          type: model
+      summary: Gets details for a single deployment specified by the given deployment_id.
+      url: /deployments/{deploymentId}
+    - apiVersions:
+      - null
+      bodyParameter:
+        clientName: body
+        contentTypes:
+        - application/json
+        defaultContentType: application/json
+        description: ''
+        inOverload: false
+        location: body
+        optional: false
+        restApiName: body
+        type: &id064
+          type: combined
+          types:
+          - *id006
+          - *id012
+          - *id014
+      description: Updates the mutable details of the deployment with the given deployment_id.
+      discriminator: basic
+      exceptions:
+      - discriminator: basic
+        headers: []
+        statusCodes:
+        - default
+      groupName: ''
+      isOverload: false
+      method: PATCH
+      name: update_deployment
+      overloads:
+      - apiVersions:
+        - null
+        bodyParameter:
+          clientName: body
+          contentTypes:
+          - application/json
+          defaultContentType: application/json
+          description: ''
+          inOverload: false
+          location: body
+          optional: false
+          restApiName: body
+          type: *id006
+        description: Updates the mutable details of the deployment with the given
+          deployment_id.
+        discriminator: basic
+        exceptions:
+        - discriminator: basic
+          headers: []
+          statusCodes:
+          - default
+        groupName: ''
+        isOverload: true
+        method: PATCH
+        name: update_deployment
+        overloads: []
+        parameters:
+        - clientName: endpoint
+          description: 'Supported Cognitive Services endpoints (protocol and hostname,
+            for example:
+
+            https://westus.api.cognitive.microsoft.com).'
+          implementation: Client
+          inOverload: false
+          location: endpointPath
+          optional: false
+          restApiName: endpoint
+          skipUrlEncoding: true
+          type: *id003
+        - clientName: deployment_id
+          description: The identifier of the deployment.
+          implementation: Method
+          inOverload: false
+          location: path
+          optional: false
+          restApiName: deploymentId
+          skipUrlEncoding: false
+          type: *id003
+        - clientDefaultValue: application/merge-patch+json
+          clientName: content_type
+          description: Body Parameter content-type. Content type parameter for JSON
+            body.
+          implementation: Method
+          inDocstring: true
+          inOverload: true
+          location: header
+          optional: false
+          restApiName: Content-Type
+          skipUrlEncoding: false
+          type: &id016
+            type: string
+        - clientDefaultValue: 2022-06-01-preview
+          clientName: api_version
+          description: The API version to use for this operation.
+          implementation: Client
+          inOverload: false
+          in_docstring: false
+          location: query
+          optional: false
+          restApiName: api-version
+          skipUrlEncoding: false
+          type: *id007
+        - checkClientInput: false
+          clientDefaultValue: application/json
+          clientName: accept
+          delimiter: null
+          description: Accept header.
+          explode: false
+          groupedBy: null
+          implementation: Method
+          inDocstring: true
+          inOverload: false
+          inOverriden: false
+          location: header
+          optional: false
+          restApiName: Accept
+          skipUrlEncoding: false
+          type: *id008
+        responses:
+        - discriminator: operation
+          headers: []
+          statusCodes:
+          - 200
+          type: *id006
+        - discriminator: operation
+          headers: []
+          statusCodes:
+          - 201
+          type: *id006
+        summary: Updates the mutable details of the deployment with the given deployment_id.
+        url: /deployments/{deploymentId}
+      - apiVersions:
+        - null
+        bodyParameter:
+          clientName: body
+          contentTypes:
+          - application/json
+          defaultContentType: application/json
+          description: ''
+          inOverload: false
+          location: body
+          optional: false
+          restApiName: body
+          type: *id012
+        description: Updates the mutable details of the deployment with the given
+          deployment_id.
+        discriminator: basic
+        exceptions:
+        - discriminator: basic
+          headers: []
+          statusCodes:
+          - default
+        groupName: ''
+        isOverload: true
+        method: PATCH
+        name: update_deployment
+        overloads: []
+        parameters:
+        - clientName: endpoint
+          description: 'Supported Cognitive Services endpoints (protocol and hostname,
+            for example:
+
+            https://westus.api.cognitive.microsoft.com).'
+          implementation: Client
+          inOverload: false
+          location: endpointPath
+          optional: false
+          restApiName: endpoint
+          skipUrlEncoding: true
+          type: *id003
+        - clientName: deployment_id
+          description: The identifier of the deployment.
+          implementation: Method
+          inOverload: false
+          location: path
+          optional: false
+          restApiName: deploymentId
+          skipUrlEncoding: false
+          type: *id003
+        - clientDefaultValue: application/merge-patch+json
+          clientName: content_type
+          description: Body Parameter content-type. Content type parameter for JSON
+            body.
+          implementation: Method
+          inDocstring: true
+          inOverload: true
+          location: header
+          optional: false
+          restApiName: Content-Type
+          skipUrlEncoding: false
+          type: *id016
+        - clientDefaultValue: 2022-06-01-preview
+          clientName: api_version
+          description: The API version to use for this operation.
+          implementation: Client
+          inOverload: false
+          in_docstring: false
+          location: query
+          optional: false
+          restApiName: api-version
+          skipUrlEncoding: false
+          type: *id007
+        - checkClientInput: false
+          clientDefaultValue: application/json
+          clientName: accept
+          delimiter: null
+          description: Accept header.
+          explode: false
+          groupedBy: null
+          implementation: Method
+          inDocstring: true
+          inOverload: false
+          inOverriden: false
+          location: header
+          optional: false
+          restApiName: Accept
+          skipUrlEncoding: false
+          type: *id008
+        responses:
+        - discriminator: operation
+          headers: []
+          statusCodes:
+          - 200
+          type: *id006
+        - discriminator: operation
+          headers: []
+          statusCodes:
+          - 201
+          type: *id006
+        summary: Updates the mutable details of the deployment with the given deployment_id.
+        url: /deployments/{deploymentId}
+      - apiVersions:
+        - null
+        bodyParameter:
+          clientName: body
+          contentTypes:
+          - application/json
+          defaultContentType: application/json
+          description: ''
+          inOverload: false
+          location: body
+          optional: false
+          restApiName: body
+          type: *id014
+        description: Updates the mutable details of the deployment with the given
+          deployment_id.
+        discriminator: basic
+        exceptions:
+        - discriminator: basic
+          headers: []
+          statusCodes:
+          - default
+        groupName: ''
+        isOverload: true
+        method: PATCH
+        name: update_deployment
+        overloads: []
+        parameters:
+        - clientName: endpoint
+          description: 'Supported Cognitive Services endpoints (protocol and hostname,
+            for example:
+
+            https://westus.api.cognitive.microsoft.com).'
+          implementation: Client
+          inOverload: false
+          location: endpointPath
+          optional: false
+          restApiName: endpoint
+          skipUrlEncoding: true
+          type: *id003
+        - clientName: deployment_id
+          description: The identifier of the deployment.
+          implementation: Method
+          inOverload: false
+          location: path
+          optional: false
+          restApiName: deploymentId
+          skipUrlEncoding: false
+          type: *id003
+        - clientDefaultValue: application/merge-patch+json
+          clientName: content_type
+          description: Body Parameter content-type. Content type parameter for binary
+            body.
+          implementation: Method
+          inDocstring: true
+          inOverload: true
+          location: header
+          optional: false
+          restApiName: Content-Type
+          skipUrlEncoding: false
+          type: *id016
+        - clientDefaultValue: 2022-06-01-preview
+          clientName: api_version
+          description: The API version to use for this operation.
+          implementation: Client
+          inOverload: false
+          in_docstring: false
+          location: query
+          optional: false
+          restApiName: api-version
+          skipUrlEncoding: false
+          type: *id007
+        - checkClientInput: false
+          clientDefaultValue: application/json
+          clientName: accept
+          delimiter: null
+          description: Accept header.
+          explode: false
+          groupedBy: null
+          implementation: Method
+          inDocstring: true
+          inOverload: false
+          inOverriden: false
+          location: header
+          optional: false
+          restApiName: Accept
+          skipUrlEncoding: false
+          type: *id008
+        responses:
+        - discriminator: operation
+          headers: []
+          statusCodes:
+          - 200
+          type: *id006
+        - discriminator: operation
+          headers: []
+          statusCodes:
+          - 201
+          type: *id006
+        summary: Updates the mutable details of the deployment with the given deployment_id.
+        url: /deployments/{deploymentId}
+      parameters:
+      - *id015
+      - clientName: deployment_id
+        description: The identifier of the deployment.
+        implementation: Method
+        inOverload: false
+        location: path
+        optional: false
+        restApiName: deploymentId
+        skipUrlEncoding: false
+        type: *id003
+      - clientDefaultValue: null
+        clientName: content_type
+        description: This request has a JSON Merge Patch body.
+        implementation: Method
+        inDocstring: true
+        inOverload: false
+        inOverriden: true
+        location: header
+        optional: true
+        restApiName: Content-Type
+        skipUrlEncoding: false
+        type: *id016
+      - clientDefaultValue: 2022-06-01-preview
+        clientName: api_version
+        description: The API version to use for this operation.
+        implementation: Client
+        inOverload: false
+        in_docstring: false
+        location: query
+        optional: false
+        restApiName: api-version
+        skipUrlEncoding: false
+        type: *id007
+      - checkClientInput: false
+        clientDefaultValue: application/json
+        clientName: accept
+        delimiter: null
+        description: Accept header.
+        explode: false
+        groupedBy: null
+        implementation: Method
+        inDocstring: true
+        inOverload: false
+        inOverriden: false
+        location: header
+        optional: false
+        restApiName: Accept
+        skipUrlEncoding: false
+        type: *id008
+      responses:
+      - discriminator: operation
+        headers: []
+        statusCodes:
+        - 200
+        type: *id006
+      - discriminator: operation
+        headers: []
+        statusCodes:
+        - 201
+        type: *id006
+      summary: Updates the mutable details of the deployment with the given deployment_id.
+      url: /deployments/{deploymentId}
+    - apiVersions:
+      - null
+      description: Deletes the deployment specified by the given deployment_id.
+      discriminator: basic
+      exceptions:
+      - discriminator: basic
+        headers: []
+        statusCodes:
+        - default
+      groupName: ''
+      isOverload: false
+      method: DELETE
+      name: delete_deployment
+      overloads: []
+      parameters:
+      - *id015
+      - clientName: deployment_id
+        description: The identifier of the deployment.
+        implementation: Method
+        inOverload: false
+        location: path
+        optional: false
+        restApiName: deploymentId
+        skipUrlEncoding: false
+        type: *id003
+      - clientDefaultValue: 2022-06-01-preview
+        clientName: api_version
+        description: The API version to use for this operation.
+        implementation: Client
+        inOverload: false
+        in_docstring: false
+        location: query
+        optional: false
+        restApiName: api-version
+        skipUrlEncoding: false
+        type: *id007
+      responses:
+      - discriminator: operation
+        headers: []
+        statusCodes:
+        - 204
+      summary: Deletes the deployment specified by the given deployment_id.
+      url: /deployments/{deploymentId}
+    - apiVersions:
+      - null
+      description: 'Gets a list of all files owned by the Azure OpenAI resource.
+
+        These include user uploaded content like files with purpose "fine-tune" for
+        training or
+
+        validation of fine-tunes models
+
+        as well as files that are generated by the
+
+        service such as "fine-tune-results" which contains various metrics for the
+
+        corresponding fine-tune job.'
+      discriminator: basic
+      exceptions:
+      - discriminator: basic
+        headers: []
+        statusCodes:
+        - default
+      groupName: ''
+      isOverload: false
+      method: GET
+      name: list_files
+      overloads: []
+      parameters:
+      - *id015
+      - clientDefaultValue: 2022-06-01-preview
+        clientName: api_version
+        description: The API version to use for this operation.
+        implementation: Client
+        inOverload: false
+        in_docstring: false
+        location: query
+        optional: false
+        restApiName: api-version
+        skipUrlEncoding: false
+        type: *id007
+      - checkClientInput: false
+        clientDefaultValue: application/json
+        clientName: accept
+        delimiter: null
+        description: Accept header.
+        explode: false
+        groupedBy: null
+        implementation: Method
+        inDocstring: true
+        inOverload: false
+        inOverriden: false
+        location: header
+        optional: false
+        restApiName: Accept
+        skipUrlEncoding: false
+        type: *id008
+      responses:
+      - discriminator: operation
+        headers: []
+        statusCodes:
+        - 200
+        type: &id043
+          base: dpg
+          description: FileList.
+          discriminatedSubtypes: {}
+          name: FileList
+          parents: []
+          properties:
+          - clientName: object
+            description: Defines the type of this object.
+            optional: true
+            readonly: false
+            restApiName: object
+            type: &id044
+              type: constant
+              value: file
+              valueType:
+                type: string
+          - clientName: data
+            description: The list of Files.
+            optional: true
+            readonly: false
+            restApiName: data
+            type: &id023
+              elementType: &id017
+                base: dpg
+                description: 'A file is a document usable for training and validation.
+                  It can also be a
+
+                  service generated document with result details.'
+                discriminatedSubtypes: {}
+                name: File
+                parents: []
+                properties:
+                - clientName: object
+                  description: Defines the type of an object.
+                  optional: true
+                  readonly: true
+                  restApiName: object
+                  type: *id010
+                - clientName: status
+                  description: The state of a job or item.
+                  optional: true
+                  readonly: true
+                  restApiName: status
+                  type: *id011
+                - clientName: created_at
+                  description: A timestamp when this job or item was created (in unix
+                    epochs).
+                  optional: true
+                  readonly: true
+                  restApiName: created_at
+                  type: *id002
+                - clientName: updated_at
+                  description: A timestamp when this job or item was modified last
+                    (in unix epochs).
+                  optional: true
+                  readonly: true
+                  restApiName: updated_at
+                  type: *id002
+                - clientName: id
+                  description: The identity of this item.
+                  optional: false
+                  pylintDisable: redefined-builtin
+                  readonly: true
+                  restApiName: id
+                  type: *id003
+                - clientName: bytes
+                  description: 'The size of this file when available (can be null).
+                    File sizes larger than
+
+                    2^53-1 are not supported to ensure compatibility
+
+                    with JavaScript integers.'
+                  optional: true
+                  readonly: true
+                  restApiName: bytes
+                  type: *id002
+                - clientName: purpose
+                  description: 'The intended purpose of the uploaded documents. Use
+                    "fine-tune" for
+
+                    fine-tuning. This allows us to validate the format of the uploaded
+                    file.'
+                  optional: false
+                  readonly: false
+                  restApiName: purpose
+                  type: &id019
+                    type: string
+                - clientName: filename
+                  description: The name of the file.
+                  optional: false
+                  readonly: false
+                  restApiName: filename
+                  type: *id003
+                snakeCaseName: file
+                type: model
+              type: list
+          snakeCaseName: file_list
+          type: model
+      summary: 'Gets a list of all files owned by the Azure OpenAI resource.
+
+        These include user uploaded content like files with purpose "fine-tune" for
+        training or
+
+        validation of fine-tunes models as well as files that are generated by the
+
+        service such as "fine-tune-results" which contains various metrics for the
+
+        corresponding fine-tune job.'
+      url: /files
+    - apiVersions:
+      - null
+      bodyParameter:
+        clientName: body
+        contentTypes:
+        - application/json
+        defaultContentType: application/json
+        description: ''
+        inOverload: false
+        location: body
+        optional: false
+        restApiName: body
+        type: &id065
+          type: combined
+          types:
+          - *id017
+          - *id012
+          - *id014
+      description: 'Creates a new file entity by uploading data from a local machine.
+        Uploaded
+
+        files can, for example, be used for training or evaluating fine-tuned models.'
+      discriminator: basic
+      exceptions:
+      - discriminator: basic
+        headers: []
+        statusCodes:
+        - default
+      groupName: ''
+      isOverload: false
+      method: POST
+      name: upload_file
+      overloads:
+      - apiVersions:
+        - null
+        bodyParameter:
+          clientName: body
+          contentTypes:
+          - application/json
+          defaultContentType: application/json
+          description: ''
+          inOverload: false
+          location: body
+          optional: false
+          restApiName: body
+          type: *id017
+        description: 'Creates a new file entity by uploading data from a local machine.
+          Uploaded
+
+          files can, for example, be used for training or evaluating fine-tuned models.'
+        discriminator: basic
+        exceptions:
+        - discriminator: basic
+          headers: []
+          statusCodes:
+          - default
+        groupName: ''
+        isOverload: true
+        method: POST
+        name: upload_file
+        overloads: []
+        parameters:
+        - clientName: endpoint
+          description: 'Supported Cognitive Services endpoints (protocol and hostname,
+            for example:
+
+            https://westus.api.cognitive.microsoft.com).'
+          implementation: Client
+          inOverload: false
+          location: endpointPath
+          optional: false
+          restApiName: endpoint
+          skipUrlEncoding: true
+          type: *id003
+        - clientDefaultValue: 2022-06-01-preview
+          clientName: api_version
+          description: The API version to use for this operation.
+          implementation: Client
+          inOverload: false
+          in_docstring: false
+          location: query
+          optional: false
+          restApiName: api-version
+          skipUrlEncoding: false
+          type: *id007
+        - checkClientInput: false
+          clientDefaultValue: application/json
+          clientName: accept
+          delimiter: null
+          description: Accept header.
+          explode: false
+          groupedBy: null
+          implementation: Method
+          inDocstring: true
+          inOverload: false
+          inOverriden: false
+          location: header
+          optional: false
+          restApiName: Accept
+          skipUrlEncoding: false
+          type: *id008
+        - checkClientInput: false
+          clientDefaultValue: application/json
+          clientName: content_type
+          delimiter: null
+          description: Body Parameter content-type. Content type parameter for JSON
+            body.
+          implementation: Method
+          inDocstring: true
+          inOverload: true
+          inOverriden: false
+          location: header
+          optional: true
+          restApiName: Content-Type
+          type: *id001
+        responses:
+        - discriminator: operation
+          headers:
+          - restApiName: Location
+            type: &id018
+              description: The location of an instance of File
+              format: url
+              type: string
+          statusCodes:
+          - 201
+          type: &id020
+            base: dpg
+            description: File.
+            discriminatedSubtypes: {}
+            name: File
+            parents: []
+            properties:
+            - clientName: location
+              description: ''
+              optional: false
+              readonly: false
+              restApiName: location
+              type: *id018
+            - clientName: object
+              description: Defines the type of an object.
+              optional: true
+              readonly: true
+              restApiName: object
+              type: *id010
+            - clientName: status
+              description: The state of a job or item.
+              optional: true
+              readonly: true
+              restApiName: status
+              type: *id011
+            - clientName: created_at
+              description: A timestamp when this job or item was created (in unix
+                epochs).
+              optional: true
+              readonly: true
+              restApiName: created_at
+              type: *id002
+            - clientName: updated_at
+              description: A timestamp when this job or item was modified last (in
+                unix epochs).
+              optional: true
+              readonly: true
+              restApiName: updated_at
+              type: *id002
+            - clientName: id
+              description: The identity of this item.
+              optional: false
+              pylintDisable: redefined-builtin
+              readonly: true
+              restApiName: id
+              type: *id003
+            - clientName: bytes
+              description: 'The size of this file when available (can be null). File
+                sizes larger than
+
+                2^53-1 are not supported to ensure compatibility
+
+                with JavaScript integers.'
+              optional: true
+              readonly: true
+              restApiName: bytes
+              type: *id002
+            - clientName: purpose
+              description: 'The intended purpose of the uploaded documents. Use "fine-tune"
+                for
+
+                fine-tuning. This allows us to validate the format of the uploaded
+                file.'
+              optional: false
+              readonly: false
+              restApiName: purpose
+              type: *id019
+            - clientName: filename
+              description: The name of the file.
+              optional: false
+              readonly: false
+              restApiName: filename
+              type: *id003
+            snakeCaseName: file
+            type: model
+        summary: 'Creates a new file entity by uploading data from a local machine.
+          Uploaded
+
+          files can, for example, be used for training or evaluating fine-tuned models.'
+        url: /files
+      - apiVersions:
+        - null
+        bodyParameter:
+          clientName: body
+          contentTypes:
+          - application/json
+          defaultContentType: application/json
+          description: ''
+          inOverload: false
+          location: body
+          optional: false
+          restApiName: body
+          type: *id012
+        description: 'Creates a new file entity by uploading data from a local machine.
+          Uploaded
+
+          files can, for example, be used for training or evaluating fine-tuned models.'
+        discriminator: basic
+        exceptions:
+        - discriminator: basic
+          headers: []
+          statusCodes:
+          - default
+        groupName: ''
+        isOverload: true
+        method: POST
+        name: upload_file
+        overloads: []
+        parameters:
+        - clientName: endpoint
+          description: 'Supported Cognitive Services endpoints (protocol and hostname,
+            for example:
+
+            https://westus.api.cognitive.microsoft.com).'
+          implementation: Client
+          inOverload: false
+          location: endpointPath
+          optional: false
+          restApiName: endpoint
+          skipUrlEncoding: true
+          type: *id003
+        - clientDefaultValue: 2022-06-01-preview
+          clientName: api_version
+          description: The API version to use for this operation.
+          implementation: Client
+          inOverload: false
+          in_docstring: false
+          location: query
+          optional: false
+          restApiName: api-version
+          skipUrlEncoding: false
+          type: *id007
+        - checkClientInput: false
+          clientDefaultValue: application/json
+          clientName: accept
+          delimiter: null
+          description: Accept header.
+          explode: false
+          groupedBy: null
+          implementation: Method
+          inDocstring: true
+          inOverload: false
+          inOverriden: false
+          location: header
+          optional: false
+          restApiName: Accept
+          skipUrlEncoding: false
+          type: *id008
+        - checkClientInput: false
+          clientDefaultValue: application/json
+          clientName: content_type
+          delimiter: null
+          description: Body Parameter content-type. Content type parameter for JSON
+            body.
+          implementation: Method
+          inDocstring: true
+          inOverload: true
+          inOverriden: false
+          location: header
+          optional: true
+          restApiName: Content-Type
+          type: *id001
+        responses:
+        - discriminator: operation
+          headers:
+          - restApiName: Location
+            type: *id018
+          statusCodes:
+          - 201
+          type: *id020
+        summary: 'Creates a new file entity by uploading data from a local machine.
+          Uploaded
+
+          files can, for example, be used for training or evaluating fine-tuned models.'
+        url: /files
+      - apiVersions:
+        - null
+        bodyParameter:
+          clientName: body
+          contentTypes:
+          - application/json
+          defaultContentType: application/json
+          description: ''
+          inOverload: false
+          location: body
+          optional: false
+          restApiName: body
+          type: *id014
+        description: 'Creates a new file entity by uploading data from a local machine.
+          Uploaded
+
+          files can, for example, be used for training or evaluating fine-tuned models.'
+        discriminator: basic
+        exceptions:
+        - discriminator: basic
+          headers: []
+          statusCodes:
+          - default
+        groupName: ''
+        isOverload: true
+        method: POST
+        name: upload_file
+        overloads: []
+        parameters:
+        - clientName: endpoint
+          description: 'Supported Cognitive Services endpoints (protocol and hostname,
+            for example:
+
+            https://westus.api.cognitive.microsoft.com).'
+          implementation: Client
+          inOverload: false
+          location: endpointPath
+          optional: false
+          restApiName: endpoint
+          skipUrlEncoding: true
+          type: *id003
+        - clientDefaultValue: 2022-06-01-preview
+          clientName: api_version
+          description: The API version to use for this operation.
+          implementation: Client
+          inOverload: false
+          in_docstring: false
+          location: query
+          optional: false
+          restApiName: api-version
+          skipUrlEncoding: false
+          type: *id007
+        - checkClientInput: false
+          clientDefaultValue: application/json
+          clientName: accept
+          delimiter: null
+          description: Accept header.
+          explode: false
+          groupedBy: null
+          implementation: Method
+          inDocstring: true
+          inOverload: false
+          inOverriden: false
+          location: header
+          optional: false
+          restApiName: Accept
+          skipUrlEncoding: false
+          type: *id008
+        - checkClientInput: false
+          clientDefaultValue: application/json
+          clientName: content_type
+          delimiter: null
+          description: Body Parameter content-type. Content type parameter for binary
+            body.
+          implementation: Method
+          inDocstring: true
+          inOverload: true
+          inOverriden: false
+          location: header
+          optional: true
+          restApiName: Content-Type
+          type: *id001
+        responses:
+        - discriminator: operation
+          headers:
+          - restApiName: Location
+            type: *id018
+          statusCodes:
+          - 201
+          type: *id020
+        summary: 'Creates a new file entity by uploading data from a local machine.
+          Uploaded
+
+          files can, for example, be used for training or evaluating fine-tuned models.'
+        url: /files
+      parameters:
+      - *id015
+      - clientDefaultValue: 2022-06-01-preview
+        clientName: api_version
+        description: The API version to use for this operation.
+        implementation: Client
+        inOverload: false
+        in_docstring: false
+        location: query
+        optional: false
+        restApiName: api-version
+        skipUrlEncoding: false
+        type: *id007
+      - checkClientInput: false
+        clientDefaultValue: application/json
+        clientName: accept
+        delimiter: null
+        description: Accept header.
+        explode: false
+        groupedBy: null
+        implementation: Method
+        inDocstring: true
+        inOverload: false
+        inOverriden: false
+        location: header
+        optional: false
+        restApiName: Accept
+        skipUrlEncoding: false
+        type: *id008
+      - checkClientInput: false
+        clientDefaultValue: null
+        clientName: content_type
+        delimiter: null
+        description: 'Body parameter Content-Type. Known values are: application/json.'
+        implementation: Method
+        inDocstring: true
+        inOverload: false
+        inOverriden: true
+        location: header
+        optional: true
+        restApiName: Content-Type
+        type: *id001
+      responses:
+      - discriminator: operation
+        headers:
+        - restApiName: Location
+          type: *id018
+        statusCodes:
+        - 201
+        type: *id020
+      summary: 'Creates a new file entity by uploading data from a local machine.
+        Uploaded
+
+        files can, for example, be used for training or evaluating fine-tuned models.'
+      url: /files
+    - apiVersions:
+      - null
+      description: 'Gets details for a single file specified by the given file_id
+        including status,
+
+        size, purpose, etc.'
+      discriminator: basic
+      exceptions:
+      - discriminator: basic
+        headers: []
+        statusCodes:
+        - default
+      groupName: ''
+      isOverload: false
+      method: GET
+      name: get_file
+      overloads: []
+      parameters:
+      - *id015
+      - clientName: file_id
+        description: The identity of this item.
+        implementation: Method
+        inOverload: false
+        location: path
+        optional: false
+        restApiName: fileId
+        skipUrlEncoding: false
+        type: *id003
+      - clientDefaultValue: 2022-06-01-preview
+        clientName: api_version
+        description: The API version to use for this operation.
+        implementation: Client
+        inOverload: false
+        in_docstring: false
+        location: query
+        optional: false
+        restApiName: api-version
+        skipUrlEncoding: false
+        type: *id007
+      - checkClientInput: false
+        clientDefaultValue: application/json
+        clientName: accept
+        delimiter: null
+        description: Accept header.
+        explode: false
+        groupedBy: null
+        implementation: Method
+        inDocstring: true
+        inOverload: false
+        inOverriden: false
+        location: header
+        optional: false
+        restApiName: Accept
+        skipUrlEncoding: false
+        type: *id008
+      responses:
+      - discriminator: operation
+        headers: []
+        statusCodes:
+        - 200
+        type: &id045
+          base: dpg
+          description: File.
+          discriminatedSubtypes: {}
+          name: File
+          parents: []
+          properties:
+          - clientName: object
+            description: Defines the type of an object.
+            optional: true
+            readonly: true
+            restApiName: object
+            type: *id010
+          - clientName: status
+            description: The state of a job or item.
+            optional: true
+            readonly: true
+            restApiName: status
+            type: *id011
+          - clientName: created_at
+            description: A timestamp when this job or item was created (in unix epochs).
+            optional: true
+            readonly: true
+            restApiName: created_at
+            type: *id002
+          - clientName: updated_at
+            description: A timestamp when this job or item was modified last (in unix
+              epochs).
+            optional: true
+            readonly: true
+            restApiName: updated_at
+            type: *id002
+          - clientName: id
+            description: The identity of this item.
+            optional: false
+            pylintDisable: redefined-builtin
+            readonly: true
+            restApiName: id
+            type: *id003
+          - clientName: bytes
+            description: 'The size of this file when available (can be null). File
+              sizes larger than
+
+              2^53-1 are not supported to ensure compatibility
+
+              with JavaScript integers.'
+            optional: true
+            readonly: true
+            restApiName: bytes
+            type: *id002
+          - clientName: purpose
+            description: 'The intended purpose of the uploaded documents. Use "fine-tune"
+              for
+
+              fine-tuning. This allows us to validate the format of the uploaded file.'
+            optional: false
+            readonly: false
+            restApiName: purpose
+            type: *id019
+          - clientName: filename
+            description: The name of the file.
+            optional: false
+            readonly: false
+            restApiName: filename
+            type: *id003
+          snakeCaseName: file
+          type: model
+      summary: 'Gets details for a single file specified by the given file_id including
+        status,
+
+        size, purpose, etc.'
+      url: /files/{fileId}
+    - apiVersions:
+      - null
+      description: 'Deletes the file with the given file_id.
+
+        Deletion is also allowed if a file
+
+        was used, e.g., as training file in a fine-tune job.'
+      discriminator: basic
+      exceptions:
+      - discriminator: basic
+        headers: []
+        statusCodes:
+        - default
+      groupName: ''
+      isOverload: false
+      method: DELETE
+      name: delete_file
+      overloads: []
+      parameters:
+      - *id015
+      - clientName: file_id
+        description: The identity of this item.
+        implementation: Method
+        inOverload: false
+        location: path
+        optional: false
+        restApiName: fileId
+        skipUrlEncoding: false
+        type: *id003
+      - clientDefaultValue: 2022-06-01-preview
+        clientName: api_version
+        description: The API version to use for this operation.
+        implementation: Client
+        inOverload: false
+        in_docstring: false
+        location: query
+        optional: false
+        restApiName: api-version
+        skipUrlEncoding: false
+        type: *id007
+      responses:
+      - discriminator: operation
+        headers: []
+        statusCodes:
+        - 204
+      summary: 'Deletes the file with the given file_id.
+
+        Deletion is also allowed if a file
+
+        was used, e.g., as training file in a fine-tune job.'
+      url: /files/{fileId}
+    - apiVersions:
+      - null
+      description: 'Gets the content of the file specified by the given file_id.
+
+        Files can be user
+
+        uploaded content or generated by the service like result metrics of a fine-tune
+
+        job.'
+      discriminator: basic
+      exceptions:
+      - discriminator: basic
+        headers: []
+        statusCodes:
+        - default
+      groupName: ''
+      isOverload: false
+      method: GET
+      name: get_file_content
+      overloads: []
+      parameters:
+      - *id015
+      - clientName: file_id
+        description: The identity of this item.
+        implementation: Method
+        inOverload: false
+        location: path
+        optional: false
+        restApiName: fileId
+        skipUrlEncoding: false
+        type: *id003
+      - clientDefaultValue: 2022-06-01-preview
+        clientName: api_version
+        description: The API version to use for this operation.
+        implementation: Client
+        inOverload: false
+        in_docstring: false
+        location: query
+        optional: false
+        restApiName: api-version
+        skipUrlEncoding: false
+        type: *id007
+      - checkClientInput: false
+        clientDefaultValue: application/json
+        clientName: accept
+        delimiter: null
+        description: Accept header.
+        explode: false
+        groupedBy: null
+        implementation: Method
+        inDocstring: true
+        inOverload: false
+        inOverriden: false
+        location: header
+        optional: false
+        restApiName: Accept
+        skipUrlEncoding: false
+        type: *id008
+      responses:
+      - discriminator: operation
+        headers: []
+        statusCodes:
+        - 200
+        type: &id046
+          base: dpg
+          description: content of uploaded file.
+          discriminatedSubtypes: {}
+          name: FileContent
+          parents: []
+          properties:
+          - clientName: purpose
+            description: 'The intended purpose of the uploaded documents. Use "fine-tune"
+              for
+
+              fine-tuning. This allows us to validate the format of the uploaded file.'
+            optional: false
+            readonly: false
+            restApiName: purpose
+            type: *id019
+          - clientName: file
+            description: Gets or sets the file to upload into Azure OpenAI.
+            optional: false
+            readonly: false
+            restApiName: file
+            type: &id047
+              format: byte
+              type: byte-array
+          snakeCaseName: file_content
+          type: model
+      summary: 'Gets the content of the file specified by the given file_id.
+
+        Files can be user
+
+        uploaded content or generated by the service like result metrics of a fine-tune
+
+        job.'
+      url: /files/{fileId}:content
+    - apiVersions:
+      - null
+      bodyParameter:
+        clientName: body
+        contentTypes:
+        - application/json
+        defaultContentType: application/json
+        description: expected schema for the body of the completion post request.
+        inOverload: false
+        location: body
+        optional: false
+        restApiName: body
+        type: &id066
+          type: combined
+          types:
+          - &id021
+            base: dpg
+            description: 'Defines a document to import from an external content url
+              to be usable with
+
+              Azure OpenAI.'
+            discriminatedSubtypes: {}
+            name: FileImport
+            parents: []
+            properties:
+            - clientName: purpose
+              description: 'The intended purpose of the uploaded documents. Use "fine-tune"
+                for
+
+                fine-tuning. This allows us to validate the format of the uploaded
+                file.'
+              optional: false
+              readonly: false
+              restApiName: purpose
+              type: *id019
+            - clientName: filename
+              description: 'The name of the `JSON Lines <https://jsonlines.readthedocs.io/en/latest/>`_
+                file
+
+                to be uploaded.
+
+                If the ``purpose`` is set to "fine-tune", each line is a JSON
+
+                record with "prompt" and "completion" fields representing your training
+
+                examples.'
+              optional: false
+              readonly: false
+              restApiName: filename
+              type: *id003
+            - clientName: content_url
+              description: 'The url to download the document from (can be SAS url
+                of a blob or any other
+
+                external url accessible with a GET request).'
+              optional: false
+              readonly: false
+              restApiName: content_url
+              type: *id003
+            snakeCaseName: file_import
+            type: model
+          - *id012
+          - *id014
+      description: 'Creates a new file entity by importing data from a provided url.
+        Uploaded files
+
+        can, for example, be used for training or evaluating fine-tuned models.'
+      discriminator: basic
+      exceptions:
+      - discriminator: basic
+        headers: []
+        statusCodes:
+        - default
+      groupName: ''
+      isOverload: false
+      method: POST
+      name: import_file
+      overloads:
+      - apiVersions:
+        - null
+        bodyParameter:
+          clientName: body
+          contentTypes:
+          - application/json
+          defaultContentType: application/json
+          description: expected schema for the body of the completion post request.
+          inOverload: false
+          location: body
+          optional: false
+          restApiName: body
+          type: *id021
+        description: 'Creates a new file entity by importing data from a provided
+          url. Uploaded files
+
+          can, for example, be used for training or evaluating fine-tuned models.'
+        discriminator: basic
+        exceptions:
+        - discriminator: basic
+          headers: []
+          statusCodes:
+          - default
+        groupName: ''
+        isOverload: true
+        method: POST
+        name: import_file
+        overloads: []
+        parameters:
+        - clientName: endpoint
+          description: 'Supported Cognitive Services endpoints (protocol and hostname,
+            for example:
+
+            https://westus.api.cognitive.microsoft.com).'
+          implementation: Client
+          inOverload: false
+          location: endpointPath
+          optional: false
+          restApiName: endpoint
+          skipUrlEncoding: true
+          type: *id003
+        - clientDefaultValue: 2022-06-01-preview
+          clientName: api_version
+          description: The API version to use for this operation.
+          implementation: Client
+          inOverload: false
+          in_docstring: false
+          location: query
+          optional: false
+          restApiName: api-version
+          skipUrlEncoding: false
+          type: *id007
+        - checkClientInput: false
+          clientDefaultValue: application/json
+          clientName: accept
+          delimiter: null
+          description: Accept header.
+          explode: false
+          groupedBy: null
+          implementation: Method
+          inDocstring: true
+          inOverload: false
+          inOverriden: false
+          location: header
+          optional: false
+          restApiName: Accept
+          skipUrlEncoding: false
+          type: *id008
+        - checkClientInput: false
+          clientDefaultValue: application/json
+          clientName: content_type
+          delimiter: null
+          description: Body Parameter content-type. Content type parameter for JSON
+            body.
+          implementation: Method
+          inDocstring: true
+          inOverload: true
+          inOverriden: false
+          location: header
+          optional: true
+          restApiName: Content-Type
+          type: *id001
+        responses:
+        - discriminator: operation
+          headers:
+          - restApiName: location
+            type: *id003
+          statusCodes:
+          - 201
+          type: &id022
+            base: dpg
+            description: File.
+            discriminatedSubtypes: {}
+            name: File
+            parents: []
+            properties:
+            - clientName: object
+              description: Defines the type of an object.
+              optional: true
+              readonly: true
+              restApiName: object
+              type: *id010
+            - clientName: status
+              description: The state of a job or item.
+              optional: true
+              readonly: true
+              restApiName: status
+              type: *id011
+            - clientName: created_at
+              description: A timestamp when this job or item was created (in unix
+                epochs).
+              optional: true
+              readonly: true
+              restApiName: created_at
+              type: *id002
+            - clientName: updated_at
+              description: A timestamp when this job or item was modified last (in
+                unix epochs).
+              optional: true
+              readonly: true
+              restApiName: updated_at
+              type: *id002
+            - clientName: id
+              description: The identity of this item.
+              optional: false
+              pylintDisable: redefined-builtin
+              readonly: true
+              restApiName: id
+              type: *id003
+            - clientName: bytes
+              description: 'The size of this file when available (can be null). File
+                sizes larger than
+
+                2^53-1 are not supported to ensure compatibility
+
+                with JavaScript integers.'
+              optional: true
+              readonly: true
+              restApiName: bytes
+              type: *id002
+            - clientName: purpose
+              description: 'The intended purpose of the uploaded documents. Use "fine-tune"
+                for
+
+                fine-tuning. This allows us to validate the format of the uploaded
+                file.'
+              optional: false
+              readonly: false
+              restApiName: purpose
+              type: *id019
+            - clientName: filename
+              description: The name of the file.
+              optional: false
+              readonly: false
+              restApiName: filename
+              type: *id003
+            - clientName: location
+              description: Location of the newly created item.
+              optional: false
+              readonly: false
+              restApiName: location
+              type: *id003
+            snakeCaseName: file
+            type: model
+        summary: 'Creates a new file entity by importing data from a provided url.
+          Uploaded files
+
+          can, for example, be used for training or evaluating fine-tuned models.'
+        url: /files/import
+      - apiVersions:
+        - null
+        bodyParameter:
+          clientName: body
+          contentTypes:
+          - application/json
+          defaultContentType: application/json
+          description: expected schema for the body of the completion post request.
+          inOverload: false
+          location: body
+          optional: false
+          restApiName: body
+          type: *id012
+        description: 'Creates a new file entity by importing data from a provided
+          url. Uploaded files
+
+          can, for example, be used for training or evaluating fine-tuned models.'
+        discriminator: basic
+        exceptions:
+        - discriminator: basic
+          headers: []
+          statusCodes:
+          - default
+        groupName: ''
+        isOverload: true
+        method: POST
+        name: import_file
+        overloads: []
+        parameters:
+        - clientName: endpoint
+          description: 'Supported Cognitive Services endpoints (protocol and hostname,
+            for example:
+
+            https://westus.api.cognitive.microsoft.com).'
+          implementation: Client
+          inOverload: false
+          location: endpointPath
+          optional: false
+          restApiName: endpoint
+          skipUrlEncoding: true
+          type: *id003
+        - clientDefaultValue: 2022-06-01-preview
+          clientName: api_version
+          description: The API version to use for this operation.
+          implementation: Client
+          inOverload: false
+          in_docstring: false
+          location: query
+          optional: false
+          restApiName: api-version
+          skipUrlEncoding: false
+          type: *id007
+        - checkClientInput: false
+          clientDefaultValue: application/json
+          clientName: accept
+          delimiter: null
+          description: Accept header.
+          explode: false
+          groupedBy: null
+          implementation: Method
+          inDocstring: true
+          inOverload: false
+          inOverriden: false
+          location: header
+          optional: false
+          restApiName: Accept
+          skipUrlEncoding: false
+          type: *id008
+        - checkClientInput: false
+          clientDefaultValue: application/json
+          clientName: content_type
+          delimiter: null
+          description: Body Parameter content-type. Content type parameter for JSON
+            body.
+          implementation: Method
+          inDocstring: true
+          inOverload: true
+          inOverriden: false
+          location: header
+          optional: true
+          restApiName: Content-Type
+          type: *id001
+        responses:
+        - discriminator: operation
+          headers:
+          - restApiName: location
+            type: *id003
+          statusCodes:
+          - 201
+          type: *id022
+        summary: 'Creates a new file entity by importing data from a provided url.
+          Uploaded files
+
+          can, for example, be used for training or evaluating fine-tuned models.'
+        url: /files/import
+      - apiVersions:
+        - null
+        bodyParameter:
+          clientName: body
+          contentTypes:
+          - application/json
+          defaultContentType: application/json
+          description: expected schema for the body of the completion post request.
+          inOverload: false
+          location: body
+          optional: false
+          restApiName: body
+          type: *id014
+        description: 'Creates a new file entity by importing data from a provided
+          url. Uploaded files
+
+          can, for example, be used for training or evaluating fine-tuned models.'
+        discriminator: basic
+        exceptions:
+        - discriminator: basic
+          headers: []
+          statusCodes:
+          - default
+        groupName: ''
+        isOverload: true
+        method: POST
+        name: import_file
+        overloads: []
+        parameters:
+        - clientName: endpoint
+          description: 'Supported Cognitive Services endpoints (protocol and hostname,
+            for example:
+
+            https://westus.api.cognitive.microsoft.com).'
+          implementation: Client
+          inOverload: false
+          location: endpointPath
+          optional: false
+          restApiName: endpoint
+          skipUrlEncoding: true
+          type: *id003
+        - clientDefaultValue: 2022-06-01-preview
+          clientName: api_version
+          description: The API version to use for this operation.
+          implementation: Client
+          inOverload: false
+          in_docstring: false
+          location: query
+          optional: false
+          restApiName: api-version
+          skipUrlEncoding: false
+          type: *id007
+        - checkClientInput: false
+          clientDefaultValue: application/json
+          clientName: accept
+          delimiter: null
+          description: Accept header.
+          explode: false
+          groupedBy: null
+          implementation: Method
+          inDocstring: true
+          inOverload: false
+          inOverriden: false
+          location: header
+          optional: false
+          restApiName: Accept
+          skipUrlEncoding: false
+          type: *id008
+        - checkClientInput: false
+          clientDefaultValue: application/json
+          clientName: content_type
+          delimiter: null
+          description: Body Parameter content-type. Content type parameter for binary
+            body.
+          implementation: Method
+          inDocstring: true
+          inOverload: true
+          inOverriden: false
+          location: header
+          optional: true
+          restApiName: Content-Type
+          type: *id001
+        responses:
+        - discriminator: operation
+          headers:
+          - restApiName: location
+            type: *id003
+          statusCodes:
+          - 201
+          type: *id022
+        summary: 'Creates a new file entity by importing data from a provided url.
+          Uploaded files
+
+          can, for example, be used for training or evaluating fine-tuned models.'
+        url: /files/import
+      parameters:
+      - *id015
+      - clientDefaultValue: 2022-06-01-preview
+        clientName: api_version
+        description: The API version to use for this operation.
+        implementation: Client
+        inOverload: false
+        in_docstring: false
+        location: query
+        optional: false
+        restApiName: api-version
+        skipUrlEncoding: false
+        type: *id007
+      - checkClientInput: false
+        clientDefaultValue: application/json
+        clientName: accept
+        delimiter: null
+        description: Accept header.
+        explode: false
+        groupedBy: null
+        implementation: Method
+        inDocstring: true
+        inOverload: false
+        inOverriden: false
+        location: header
+        optional: false
+        restApiName: Accept
+        skipUrlEncoding: false
+        type: *id008
+      - checkClientInput: false
+        clientDefaultValue: null
+        clientName: content_type
+        delimiter: null
+        description: 'Body parameter Content-Type. Known values are: application/json.'
+        implementation: Method
+        inDocstring: true
+        inOverload: false
+        inOverriden: true
+        location: header
+        optional: true
+        restApiName: Content-Type
+        type: *id001
+      responses:
+      - discriminator: operation
+        headers:
+        - restApiName: location
+          type: *id003
+        statusCodes:
+        - 201
+        type: *id022
+      summary: 'Creates a new file entity by importing data from a provided url. Uploaded
+        files
+
+        can, for example, be used for training or evaluating fine-tuned models.'
+      url: /files/import
+    - apiVersions:
+      - null
+      description: 'Gets a list of all fine-tune jobs owned by the Azure OpenAI resource.
+
+        The details that are returned for each fine-tune job contain besides its
+
+        identifier the base model, training and validation files, hyper parameters,
+
+        time stamps, status and events. Events are created when the job status
+
+        changes, e.g. running or complete, and when results are uploaded.'
+      discriminator: basic
+      exceptions:
+      - discriminator: basic
+        headers: []
+        statusCodes:
+        - default
+      groupName: ''
+      isOverload: false
+      method: GET
+      name: list_fine_tunes
+      overloads: []
+      parameters:
+      - *id015
+      - clientDefaultValue: 2022-06-01-preview
+        clientName: api_version
+        description: The API version to use for this operation.
+        implementation: Client
+        inOverload: false
+        in_docstring: false
+        location: query
+        optional: false
+        restApiName: api-version
+        skipUrlEncoding: false
+        type: *id007
+      - checkClientInput: false
+        clientDefaultValue: application/json
+        clientName: accept
+        delimiter: null
+        description: Accept header.
+        explode: false
+        groupedBy: null
+        implementation: Method
+        inDocstring: true
+        inOverload: false
+        inOverriden: false
+        location: header
+        optional: false
+        restApiName: Accept
+        skipUrlEncoding: false
+        type: *id008
+      responses:
+      - discriminator: operation
+        headers: []
+        statusCodes:
+        - 200
+        type: &id048
+          base: dpg
+          description: FineTuneList.
+          discriminatedSubtypes: {}
+          name: FineTuneList
+          parents: []
+          properties:
+          - clientName: object
+            description: Defines the type of this object.
+            optional: true
+            readonly: false
+            restApiName: object
+            type: &id049
+              type: constant
+              value: fine-tune
+              valueType:
+                type: string
+          - clientName: data
+            description: The list of FineTunes.
+            optional: true
+            readonly: false
+            restApiName: data
+            type: &id053
+              elementType: &id030
+                base: dpg
+                description: Fine tuning is a job to tailor a model to specific training
+                  data.
+                discriminatedSubtypes: {}
+                name: FineTune
+                parents: []
+                properties:
+                - clientName: object
+                  description: Defines the type of an object.
+                  optional: true
+                  readonly: true
+                  restApiName: object
+                  type: *id010
+                - clientName: status
+                  description: The state of a job or item.
+                  optional: true
+                  readonly: true
+                  restApiName: status
+                  type: *id011
+                - clientName: created_at
+                  description: A timestamp when this job or item was created (in unix
+                    epochs).
+                  optional: true
+                  readonly: true
+                  restApiName: created_at
+                  type: *id002
+                - clientName: updated_at
+                  description: A timestamp when this job or item was modified last
+                    (in unix epochs).
+                  optional: true
+                  readonly: true
+                  restApiName: updated_at
+                  type: *id002
+                - clientName: id
+                  description: The identity of this item.
+                  optional: false
+                  pylintDisable: redefined-builtin
+                  readonly: true
+                  restApiName: id
+                  type: *id003
+                - clientName: model
+                  description: The identifier of the base model used for the fine-tune.
+                  optional: false
+                  readonly: false
+                  restApiName: model
+                  type: *id003
+                - clientName: fine_tuned_model
+                  description: 'The identifier of the resulting fine tuned model.
+                    This property is only
+
+                    populated for successfully completed fine-tune runs.
+
+                    Use this identifier to
+
+                    create a deployment for inferencing.'
+                  optional: true
+                  readonly: true
+                  restApiName: fine_tuned_model
+                  type: *id003
+                - clientName: training_files
+                  description: The files that are used for training the fine tuned
+                    model.
+                  optional: false
+                  readonly: false
+                  restApiName: training_files
+                  type: *id023
+                - clientName: validation_files
+                  description: The files that are used to evaluate the fine tuned
+                    model during training.
+                  optional: true
+                  readonly: false
+                  restApiName: validation_files
+                  type: *id023
+                - clientName: result_files
+                  description: 'The result files containing training and evaluation
+                    metrics in csv format.
+
+                    The
+
+                    file is only available for successfully completed fine-tune runs.'
+                  optional: true
+                  readonly: true
+                  restApiName: result_files
+                  type: *id023
+                - clientName: events
+                  description: 'The events that show the progress of the fine-tune
+                    run including queued,
+
+                    running and completed.'
+                  optional: true
+                  readonly: true
+                  restApiName: events
+                  type: &id027
+                    elementType: &id050
+                      base: dpg
+                      description: Event.
+                      discriminatedSubtypes: {}
+                      name: Event
+                      parents: []
+                      properties:
+                      - clientName: object
+                        description: Defines the type of an object.
+                        optional: true
+                        readonly: true
+                        restApiName: object
+                        type: *id010
+                      - clientName: created_at
+                        description: A timestamp when this event was created (in unix
+                          epochs).
+                        optional: true
+                        readonly: true
+                        restApiName: created_at
+                        type: *id002
+                      - clientName: level
+                        description: The verbosity level of an event.
+                        optional: true
+                        readonly: true
+                        restApiName: level
+                        type: &id051
+                          description: LogLevel.
+                          name: LogLevel
+                          snakeCaseName: log_level
+                          type: enum
+                          valueType:
+                            type: string
+                          values:
+                          - description: ''
+                            name: INFO
+                            value: info
+                          - description: ''
+                            name: WARNING
+                            value: warning
+                          - description: ''
+                            name: ERROR
+                            value: error
+                      - clientName: message
+                        description: 'The message describing the event. This can be
+                          a change of state, e.g.,
+
+                          enqueued, started, failed or completed, or other events
+                          like uploaded results.'
+                        optional: true
+                        readonly: true
+                        restApiName: message
+                        type: *id003
+                      snakeCaseName: event
+                      type: model
+                    type: list
+                - clientName: organisation_id
+                  description: 'The organisation id of this fine tune job. Unused
+                    on Azure OpenAI;
+
+                    compatibility for OpenAI only.'
+                  optional: true
+                  readonly: true
+                  restApiName: organisation_id
+                  type: *id003
+                - clientName: user_id
+                  description: 'The user id of this fine tune job. Unused on Azure
+                    OpenAI; compatibility for
+
+                    OpenAI only.'
+                  optional: true
+                  readonly: true
+                  restApiName: user_id
+                  type: *id003
+                - clientName: hyperparams
+                  description: The hyper parameter settings used in a fine tune job.
+                  optional: true
+                  readonly: false
+                  restApiName: hyperparams
+                  type: &id025
+                    base: dpg
+                    description: The hyper parameter settings used in a fine tune
+                      job.
+                    discriminatedSubtypes: {}
+                    name: HyperParameters
+                    parents: []
+                    properties:
+                    - clientName: batch_size
+                      description: 'The batch size to use for training. The batch
+                        size is the number of training
+
+                        examples used to train a single forward and backward pass.
+
+                        In general, we''ve
+
+                        found that larger batch sizes tend to work better for larger
+                        datasets.
+
+                        The
+
+                        default value as well as the maximum value for this property
+                        are specific to a
+
+                        base model.'
+                      optional: true
+                      readonly: false
+                      restApiName: batch_size
+                      type: *id002
+                    - clientName: learning_rate_multiplier
+                      description: 'The learning rate multiplier to use for training.
+                        The fine-tuning learning rate
+
+                        is the original learning rate used for pre-training multiplied
+                        by this
+
+                        value.
+
+                        Larger learning rates tend to perform better with larger batch
+
+                        sizes.
+
+                        We recommend experimenting with values in the range 0.02 to
+                        0.2 to see
+
+                        what produces the best results.'
+                      optional: true
+                      readonly: false
+                      restApiName: learning_rate_multiplier
+                      type: &id024
+                        type: float
+                    - clientName: n_epochs
+                      description: 'The number of epochs to train the model for. An
+                        epoch refers to one full cycle
+
+                        through the training dataset.'
+                      optional: true
+                      readonly: false
+                      restApiName: n_epochs
+                      type: *id002
+                    - clientName: prompt_loss_weight
+                      description: 'The weight to use for loss on the prompt tokens.
+                        This controls how much the
+
+                        model tries to learn to generate the prompt
+
+                        (as compared to the completion
+
+                        which always has a weight of 1.0), and can add a stabilizing
+                        effect to training
+
+                        when completions are short.
+
+                        If prompts are extremely long (relative to
+
+                        completions), it may make sense to reduce this weight so as
+                        to avoid
+
+                        over-prioritizing learning the prompt.'
+                      optional: true
+                      readonly: false
+                      restApiName: prompt_loss_weight
+                      type: *id024
+                    - clientName: compute_classification_metrics
+                      description: 'A value indicating whether to compute classification
+                        metrics.
+
+                        If set, we
+
+                        calculate classification-specific metrics such as accuracy
+                        and F-1 score using
+
+                        the validation set at the end of every epoch.
+
+                        These metrics can be viewed in
+
+                        the results file. In order to compute classification metrics,
+                        you must provide
+
+                        a validation_file.Additionally,
+
+                        you must specify classification_n_classes for
+
+                        multiclass classification or classification_positive_class
+                        for binary
+
+                        classification.'
+                      optional: true
+                      readonly: false
+                      restApiName: compute_classification_metrics
+                      type: &id029
+                        type: boolean
+                    - clientName: classification_n_classes
+                      description: 'The number of classes in a classification task.
+
+                        This parameter is required for
+
+                        multiclass classification.'
+                      optional: true
+                      readonly: false
+                      restApiName: classification_n_classes
+                      type: *id002
+                    - clientName: classification_positive_class
+                      description: 'The positive class in binary classification.
+
+                        This parameter is needed to
+
+                        generate precision, recall, and F1 metrics when doing binary
+                        classification.'
+                      optional: true
+                      readonly: false
+                      restApiName: classification_positive_class
+                      type: *id003
+                    - clientName: classification_betas
+                      description: 'The classification beta values. If this is provided,
+                        we calculate F-beta scores
+
+                        at the specified beta values.
+
+                        The F-beta score is a generalization of F-1
+
+                        score. This is only used for binary classification.
+
+                        With a beta of 1 (i.e.the
+
+                        F-1 score), precision and recall are given the same weight.
+
+                        A larger beta
+
+                        score puts more weight on recall and less on precision. A
+                        smaller beta score
+
+                        puts more weight on precision and less on recall.'
+                      optional: true
+                      readonly: false
+                      restApiName: classification_betas
+                      type: &id052
+                        elementType: *id024
+                        type: list
+                    snakeCaseName: hyper_parameters
+                    type: model
+                snakeCaseName: fine_tune
+                type: model
+              type: list
+          snakeCaseName: fine_tune_list
+          type: model
+      summary: 'Gets a list of all fine-tune jobs owned by the Azure OpenAI resource.
+
+        The details that are returned for each fine-tune job contain besides its
+
+        identifier the base model, training and validation files, hyper parameters,
+
+        time stamps, status and events.  Events are created when the job status
+
+        changes, e.g. running or complete, and when results are uploaded.'
+      url: /fine-tunes
+    - apiVersions:
+      - null
+      bodyParameter:
+        clientName: body
+        contentTypes:
+        - application/json
+        defaultContentType: application/json
+        description: ''
+        inOverload: false
+        location: body
+        optional: false
+        restApiName: body
+        type: &id067
+          type: combined
+          types:
+          - &id026
+            base: dpg
+            description: FineTuneCreation.
+            discriminatedSubtypes: {}
+            name: FineTuneCreation
+            parents: []
+            properties:
+            - clientName: model
+              description: The identifier of the base model used for this fine-tune.
+              optional: false
+              readonly: false
+              restApiName: model
+              type: *id003
+            - clientName: training_file
+              description: The file that is used for training this fine tuned model.
+              optional: false
+              readonly: false
+              restApiName: training_file
+              type: *id003
+            - clientName: validation_file
+              description: The file that is used to evaluate the fine tuned model
+                during training.
+              optional: true
+              readonly: false
+              restApiName: validation_file
+              type: *id003
+            - clientName: hyperparams
+              description: The hyper parameter settings used in a fine tune job.
+              optional: true
+              readonly: false
+              restApiName: hyperparams
+              type: *id025
+            snakeCaseName: fine_tune_creation
+            type: model
+          - *id012
+          - *id014
+      description: 'Creates a job that fine-tunes a specified model from a given training
+
+        file.
+
+        Response includes details of the enqueued job including job status and
+
+        hyper parameters.
+
+        The name of the fine-tuned model is added to the response
+
+        once complete.'
+      discriminator: basic
+      exceptions:
+      - discriminator: basic
+        headers: []
+        statusCodes:
+        - default
+      groupName: ''
+      isOverload: false
+      method: POST
+      name: create_fine_tune
+      overloads:
+      - apiVersions:
+        - null
+        bodyParameter:
+          clientName: body
+          contentTypes:
+          - application/json
+          defaultContentType: application/json
+          description: ''
+          inOverload: false
+          location: body
+          optional: false
+          restApiName: body
+          type: *id026
+        description: 'Creates a job that fine-tunes a specified model from a given
+          training
+
+          file.
+
+          Response includes details of the enqueued job including job status and
+
+          hyper parameters.
+
+          The name of the fine-tuned model is added to the response
+
+          once complete.'
+        discriminator: basic
+        exceptions:
+        - discriminator: basic
+          headers: []
+          statusCodes:
+          - default
+        groupName: ''
+        isOverload: true
+        method: POST
+        name: create_fine_tune
+        overloads: []
+        parameters:
+        - clientName: endpoint
+          description: 'Supported Cognitive Services endpoints (protocol and hostname,
+            for example:
+
+            https://westus.api.cognitive.microsoft.com).'
+          implementation: Client
+          inOverload: false
+          location: endpointPath
+          optional: false
+          restApiName: endpoint
+          skipUrlEncoding: true
+          type: *id003
+        - clientDefaultValue: 2022-06-01-preview
+          clientName: api_version
+          description: The API version to use for this operation.
+          implementation: Client
+          inOverload: false
+          in_docstring: false
+          location: query
+          optional: false
+          restApiName: api-version
+          skipUrlEncoding: false
+          type: *id007
+        - checkClientInput: false
+          clientDefaultValue: application/json
+          clientName: accept
+          delimiter: null
+          description: Accept header.
+          explode: false
+          groupedBy: null
+          implementation: Method
+          inDocstring: true
+          inOverload: false
+          inOverriden: false
+          location: header
+          optional: false
+          restApiName: Accept
+          skipUrlEncoding: false
+          type: *id008
+        - checkClientInput: false
+          clientDefaultValue: application/json
+          clientName: content_type
+          delimiter: null
+          description: Body Parameter content-type. Content type parameter for JSON
+            body.
+          implementation: Method
+          inDocstring: true
+          inOverload: true
+          inOverriden: false
+          location: header
+          optional: true
+          restApiName: Content-Type
+          type: *id001
+        responses:
+        - discriminator: operation
+          headers:
+          - restApiName: location
+            type: *id003
+          statusCodes:
+          - 201
+          type: &id028
+            base: dpg
+            description: FineTune.
+            discriminatedSubtypes: {}
+            name: FineTune
+            parents: []
+            properties:
+            - clientName: object
+              description: Defines the type of an object.
+              optional: true
+              readonly: true
+              restApiName: object
+              type: *id010
+            - clientName: status
+              description: The state of a job or item.
+              optional: true
+              readonly: true
+              restApiName: status
+              type: *id011
+            - clientName: created_at
+              description: A timestamp when this job or item was created (in unix
+                epochs).
+              optional: true
+              readonly: true
+              restApiName: created_at
+              type: *id002
+            - clientName: updated_at
+              description: A timestamp when this job or item was modified last (in
+                unix epochs).
+              optional: true
+              readonly: true
+              restApiName: updated_at
+              type: *id002
+            - clientName: id
+              description: The identity of this item.
+              optional: false
+              pylintDisable: redefined-builtin
+              readonly: true
+              restApiName: id
+              type: *id003
+            - clientName: model
+              description: The identifier of the base model used for the fine-tune.
+              optional: false
+              readonly: false
+              restApiName: model
+              type: *id003
+            - clientName: fine_tuned_model
+              description: 'The identifier of the resulting fine tuned model. This
+                property is only
+
+                populated for successfully completed fine-tune runs.
+
+                Use this identifier to
+
+                create a deployment for inferencing.'
+              optional: true
+              readonly: true
+              restApiName: fine_tuned_model
+              type: *id003
+            - clientName: training_files
+              description: The files that are used for training the fine tuned model.
+              optional: false
+              readonly: false
+              restApiName: training_files
+              type: *id023
+            - clientName: validation_files
+              description: The files that are used to evaluate the fine tuned model
+                during training.
+              optional: true
+              readonly: false
+              restApiName: validation_files
+              type: *id023
+            - clientName: result_files
+              description: 'The result files containing training and evaluation metrics
+                in csv format.
+
+                The
+
+                file is only available for successfully completed fine-tune runs.'
+              optional: true
+              readonly: true
+              restApiName: result_files
+              type: *id023
+            - clientName: events
+              description: 'The events that show the progress of the fine-tune run
+                including queued,
+
+                running and completed.'
+              optional: true
+              readonly: true
+              restApiName: events
+              type: *id027
+            - clientName: organisation_id
+              description: 'The organisation id of this fine tune job. Unused on Azure
+                OpenAI;
+
+                compatibility for OpenAI only.'
+              optional: true
+              readonly: true
+              restApiName: organisation_id
+              type: *id003
+            - clientName: user_id
+              description: 'The user id of this fine tune job. Unused on Azure OpenAI;
+                compatibility for
+
+                OpenAI only.'
+              optional: true
+              readonly: true
+              restApiName: user_id
+              type: *id003
+            - clientName: hyperparams
+              description: The hyper parameter settings used in a fine tune job.
+              optional: true
+              readonly: false
+              restApiName: hyperparams
+              type: *id025
+            - clientName: location
+              description: Location of the newly created item.
+              optional: false
+              readonly: false
+              restApiName: location
+              type: *id003
+            snakeCaseName: fine_tune
+            type: model
+        summary: 'Creates a job that fine-tunes a specified model from a given training
+
+          file.
+
+          Response includes details of the enqueued job including job status and
+
+          hyper parameters.
+
+          The name of the fine-tuned model is added to the response
+
+          once complete.'
+        url: /fine-tunes
+      - apiVersions:
+        - null
+        bodyParameter:
+          clientName: body
+          contentTypes:
+          - application/json
+          defaultContentType: application/json
+          description: ''
+          inOverload: false
+          location: body
+          optional: false
+          restApiName: body
+          type: *id012
+        description: 'Creates a job that fine-tunes a specified model from a given
+          training
+
+          file.
+
+          Response includes details of the enqueued job including job status and
+
+          hyper parameters.
+
+          The name of the fine-tuned model is added to the response
+
+          once complete.'
+        discriminator: basic
+        exceptions:
+        - discriminator: basic
+          headers: []
+          statusCodes:
+          - default
+        groupName: ''
+        isOverload: true
+        method: POST
+        name: create_fine_tune
+        overloads: []
+        parameters:
+        - clientName: endpoint
+          description: 'Supported Cognitive Services endpoints (protocol and hostname,
+            for example:
+
+            https://westus.api.cognitive.microsoft.com).'
+          implementation: Client
+          inOverload: false
+          location: endpointPath
+          optional: false
+          restApiName: endpoint
+          skipUrlEncoding: true
+          type: *id003
+        - clientDefaultValue: 2022-06-01-preview
+          clientName: api_version
+          description: The API version to use for this operation.
+          implementation: Client
+          inOverload: false
+          in_docstring: false
+          location: query
+          optional: false
+          restApiName: api-version
+          skipUrlEncoding: false
+          type: *id007
+        - checkClientInput: false
+          clientDefaultValue: application/json
+          clientName: accept
+          delimiter: null
+          description: Accept header.
+          explode: false
+          groupedBy: null
+          implementation: Method
+          inDocstring: true
+          inOverload: false
+          inOverriden: false
+          location: header
+          optional: false
+          restApiName: Accept
+          skipUrlEncoding: false
+          type: *id008
+        - checkClientInput: false
+          clientDefaultValue: application/json
+          clientName: content_type
+          delimiter: null
+          description: Body Parameter content-type. Content type parameter for JSON
+            body.
+          implementation: Method
+          inDocstring: true
+          inOverload: true
+          inOverriden: false
+          location: header
+          optional: true
+          restApiName: Content-Type
+          type: *id001
+        responses:
+        - discriminator: operation
+          headers:
+          - restApiName: location
+            type: *id003
+          statusCodes:
+          - 201
+          type: *id028
+        summary: 'Creates a job that fine-tunes a specified model from a given training
+
+          file.
+
+          Response includes details of the enqueued job including job status and
+
+          hyper parameters.
+
+          The name of the fine-tuned model is added to the response
+
+          once complete.'
+        url: /fine-tunes
+      - apiVersions:
+        - null
+        bodyParameter:
+          clientName: body
+          contentTypes:
+          - application/json
+          defaultContentType: application/json
+          description: ''
+          inOverload: false
+          location: body
+          optional: false
+          restApiName: body
+          type: *id014
+        description: 'Creates a job that fine-tunes a specified model from a given
+          training
+
+          file.
+
+          Response includes details of the enqueued job including job status and
+
+          hyper parameters.
+
+          The name of the fine-tuned model is added to the response
+
+          once complete.'
+        discriminator: basic
+        exceptions:
+        - discriminator: basic
+          headers: []
+          statusCodes:
+          - default
+        groupName: ''
+        isOverload: true
+        method: POST
+        name: create_fine_tune
+        overloads: []
+        parameters:
+        - clientName: endpoint
+          description: 'Supported Cognitive Services endpoints (protocol and hostname,
+            for example:
+
+            https://westus.api.cognitive.microsoft.com).'
+          implementation: Client
+          inOverload: false
+          location: endpointPath
+          optional: false
+          restApiName: endpoint
+          skipUrlEncoding: true
+          type: *id003
+        - clientDefaultValue: 2022-06-01-preview
+          clientName: api_version
+          description: The API version to use for this operation.
+          implementation: Client
+          inOverload: false
+          in_docstring: false
+          location: query
+          optional: false
+          restApiName: api-version
+          skipUrlEncoding: false
+          type: *id007
+        - checkClientInput: false
+          clientDefaultValue: application/json
+          clientName: accept
+          delimiter: null
+          description: Accept header.
+          explode: false
+          groupedBy: null
+          implementation: Method
+          inDocstring: true
+          inOverload: false
+          inOverriden: false
+          location: header
+          optional: false
+          restApiName: Accept
+          skipUrlEncoding: false
+          type: *id008
+        - checkClientInput: false
+          clientDefaultValue: application/json
+          clientName: content_type
+          delimiter: null
+          description: Body Parameter content-type. Content type parameter for binary
+            body.
+          implementation: Method
+          inDocstring: true
+          inOverload: true
+          inOverriden: false
+          location: header
+          optional: true
+          restApiName: Content-Type
+          type: *id001
+        responses:
+        - discriminator: operation
+          headers:
+          - restApiName: location
+            type: *id003
+          statusCodes:
+          - 201
+          type: *id028
+        summary: 'Creates a job that fine-tunes a specified model from a given training
+
+          file.
+
+          Response includes details of the enqueued job including job status and
+
+          hyper parameters.
+
+          The name of the fine-tuned model is added to the response
+
+          once complete.'
+        url: /fine-tunes
+      parameters:
+      - *id015
+      - clientDefaultValue: 2022-06-01-preview
+        clientName: api_version
+        description: The API version to use for this operation.
+        implementation: Client
+        inOverload: false
+        in_docstring: false
+        location: query
+        optional: false
+        restApiName: api-version
+        skipUrlEncoding: false
+        type: *id007
+      - checkClientInput: false
+        clientDefaultValue: application/json
+        clientName: accept
+        delimiter: null
+        description: Accept header.
+        explode: false
+        groupedBy: null
+        implementation: Method
+        inDocstring: true
+        inOverload: false
+        inOverriden: false
+        location: header
+        optional: false
+        restApiName: Accept
+        skipUrlEncoding: false
+        type: *id008
+      - checkClientInput: false
+        clientDefaultValue: null
+        clientName: content_type
+        delimiter: null
+        description: 'Body parameter Content-Type. Known values are: application/json.'
+        implementation: Method
+        inDocstring: true
+        inOverload: false
+        inOverriden: true
+        location: header
+        optional: true
+        restApiName: Content-Type
+        type: *id001
+      responses:
+      - discriminator: operation
+        headers:
+        - restApiName: location
+          type: *id003
+        statusCodes:
+        - 201
+        type: *id028
+      summary: 'Creates a job that fine-tunes a specified model from a given training
+
+        file.
+
+        Response includes details of the enqueued job including job status and
+
+        hyper parameters.
+
+        The name of the fine-tuned model is added to the response
+
+        once complete.'
+      url: /fine-tunes
+    - apiVersions:
+      - null
+      description: 'Gets details for a single fine-tune job specified by the given
+
+        fine_tune_id.
+
+        The details contain the base model, training and validation
+
+        files, hyper parameters, time stamps, status and events.
+
+        Events are created
+
+        when the job status changes, e.g. running or complete, and when results are
+
+        uploaded.'
+      discriminator: basic
+      exceptions:
+      - discriminator: basic
+        headers: []
+        statusCodes:
+        - default
+      groupName: ''
+      isOverload: false
+      method: GET
+      name: get_fine_tune
+      overloads: []
+      parameters:
+      - *id015
+      - clientName: fine_tune_id
+        description: The identity of this item.
+        implementation: Method
+        inOverload: false
+        location: path
+        optional: false
+        restApiName: fineTuneId
+        skipUrlEncoding: false
+        type: *id003
+      - clientDefaultValue: 2022-06-01-preview
+        clientName: api_version
+        description: The API version to use for this operation.
+        implementation: Client
+        inOverload: false
+        in_docstring: false
+        location: query
+        optional: false
+        restApiName: api-version
+        skipUrlEncoding: false
+        type: *id007
+      - checkClientInput: false
+        clientDefaultValue: application/json
+        clientName: accept
+        delimiter: null
+        description: Accept header.
+        explode: false
+        groupedBy: null
+        implementation: Method
+        inDocstring: true
+        inOverload: false
+        inOverriden: false
+        location: header
+        optional: false
+        restApiName: Accept
+        skipUrlEncoding: false
+        type: *id008
+      responses:
+      - discriminator: operation
+        headers: []
+        statusCodes:
+        - 200
+        type: &id054
+          base: dpg
+          description: FineTune.
+          discriminatedSubtypes: {}
+          name: FineTune
+          parents: []
+          properties:
+          - clientName: object
+            description: Defines the type of an object.
+            optional: true
+            readonly: true
+            restApiName: object
+            type: *id010
+          - clientName: status
+            description: The state of a job or item.
+            optional: true
+            readonly: true
+            restApiName: status
+            type: *id011
+          - clientName: created_at
+            description: A timestamp when this job or item was created (in unix epochs).
+            optional: true
+            readonly: true
+            restApiName: created_at
+            type: *id002
+          - clientName: updated_at
+            description: A timestamp when this job or item was modified last (in unix
+              epochs).
+            optional: true
+            readonly: true
+            restApiName: updated_at
+            type: *id002
+          - clientName: id
+            description: The identity of this item.
+            optional: false
+            pylintDisable: redefined-builtin
+            readonly: true
+            restApiName: id
+            type: *id003
+          - clientName: model
+            description: The identifier of the base model used for the fine-tune.
+            optional: false
+            readonly: false
+            restApiName: model
+            type: *id003
+          - clientName: fine_tuned_model
+            description: 'The identifier of the resulting fine tuned model. This property
+              is only
+
+              populated for successfully completed fine-tune runs.
+
+              Use this identifier to
+
+              create a deployment for inferencing.'
+            optional: true
+            readonly: true
+            restApiName: fine_tuned_model
+            type: *id003
+          - clientName: training_files
+            description: The files that are used for training the fine tuned model.
+            optional: false
+            readonly: false
+            restApiName: training_files
+            type: *id023
+          - clientName: validation_files
+            description: The files that are used to evaluate the fine tuned model
+              during training.
+            optional: true
+            readonly: false
+            restApiName: validation_files
+            type: *id023
+          - clientName: result_files
+            description: 'The result files containing training and evaluation metrics
+              in csv format.
+
+              The
+
+              file is only available for successfully completed fine-tune runs.'
+            optional: true
+            readonly: true
+            restApiName: result_files
+            type: *id023
+          - clientName: events
+            description: 'The events that show the progress of the fine-tune run including
+              queued,
+
+              running and completed.'
+            optional: true
+            readonly: true
+            restApiName: events
+            type: *id027
+          - clientName: organisation_id
+            description: 'The organisation id of this fine tune job. Unused on Azure
+              OpenAI;
+
+              compatibility for OpenAI only.'
+            optional: true
+            readonly: true
+            restApiName: organisation_id
+            type: *id003
+          - clientName: user_id
+            description: 'The user id of this fine tune job. Unused on Azure OpenAI;
+              compatibility for
+
+              OpenAI only.'
+            optional: true
+            readonly: true
+            restApiName: user_id
+            type: *id003
+          - clientName: hyperparams
+            description: The hyper parameter settings used in a fine tune job.
+            optional: true
+            readonly: false
+            restApiName: hyperparams
+            type: *id025
+          snakeCaseName: fine_tune
+          type: model
+      summary: 'Gets details for a single fine-tune job specified by the given
+
+        fine_tune_id.
+
+        The details contain the base model, training and validation
+
+        files, hyper parameters, time stamps, status and events.
+
+        Events are created
+
+        when the job status changes, e.g. running or complete, and when results are
+
+        uploaded.'
+      url: /fine-tunes/{fineTuneId}
+    - apiVersions:
+      - null
+      description: Deletes the fine-tune job specified by the given fine_tune_id.
+      discriminator: basic
+      exceptions:
+      - discriminator: basic
+        headers: []
+        statusCodes:
+        - default
+      groupName: ''
+      isOverload: false
+      method: DELETE
+      name: delete_fine_tune
+      overloads: []
+      parameters:
+      - *id015
+      - clientName: fine_tune_id
+        description: The identity of this item.
+        implementation: Method
+        inOverload: false
+        location: path
+        optional: false
+        restApiName: fineTuneId
+        skipUrlEncoding: false
+        type: *id003
+      - clientDefaultValue: 2022-06-01-preview
+        clientName: api_version
+        description: The API version to use for this operation.
+        implementation: Client
+        inOverload: false
+        in_docstring: false
+        location: query
+        optional: false
+        restApiName: api-version
+        skipUrlEncoding: false
+        type: *id007
+      responses:
+      - discriminator: operation
+        headers: []
+        statusCodes:
+        - 204
+      summary: Deletes the fine-tune job specified by the given fine_tune_id.
+      url: /fine-tunes/{fineTuneId}
+    - apiVersions:
+      - null
+      description: 'List events for the fine-tune job specified by the given fine_tune_id.
+
+        Events are created when the job status changes, e.g. running or
+
+        complete, and when results are uploaded.'
+      discriminator: basic
+      exceptions:
+      - discriminator: basic
+        headers: []
+        statusCodes:
+        - default
+      groupName: ''
+      isOverload: false
+      method: GET
+      name: list_fine_tune_events
+      overloads: []
+      parameters:
+      - *id015
+      - clientName: fine_tune_id
+        description: The identity of this item.
+        implementation: Method
+        inOverload: false
+        location: path
+        optional: false
+        restApiName: fineTuneId
+        skipUrlEncoding: false
+        type: *id003
+      - clientName: stream
+        description: 'A flag indicating whether to stream events for the fine-tune
+          job. If set to true,
+
+          events will be sent as data-only server-sent events as they become available.
+          The stream will terminate with
+
+          a data: [DONE] message when the job is finished (succeeded, cancelled, or
+          failed).
+
+          If set to false, only events generated so far will be returned..'
+        implementation: Method
+        inOverload: false
+        location: query
+        optional: false
+        restApiName: stream
+        skipUrlEncoding: false
+        type: *id029
+      - clientDefaultValue: 2022-06-01-preview
+        clientName: api_version
+        description: The API version to use for this operation.
+        implementation: Client
+        inOverload: false
+        in_docstring: false
+        location: query
+        optional: false
+        restApiName: api-version
+        skipUrlEncoding: false
+        type: *id007
+      - checkClientInput: false
+        clientDefaultValue: application/json
+        clientName: accept
+        delimiter: null
+        description: Accept header.
+        explode: false
+        groupedBy: null
+        implementation: Method
+        inDocstring: true
+        inOverload: false
+        inOverriden: false
+        location: header
+        optional: false
+        restApiName: Accept
+        skipUrlEncoding: false
+        type: *id008
+      responses:
+      - discriminator: operation
+        headers: []
+        statusCodes:
+        - 200
+        type: &id055
+          base: dpg
+          description: EventList.
+          discriminatedSubtypes: {}
+          name: EventList
+          parents: []
+          properties:
+          - clientName: object
+            description: Defines the type of this object.
+            optional: true
+            readonly: false
+            restApiName: object
+            type: *id010
+          - clientName: data
+            description: The list of Events.
+            optional: true
+            readonly: false
+            restApiName: data
+            type: *id027
+          snakeCaseName: event_list
+          type: model
+      summary: 'List events for the fine-tune job specified by the given fine_tune_id.
+
+        Events are created when the job status changes, e.g. running or
+
+        complete, and when results are uploaded.'
+      url: /fine-tunes/{fineTuneId}:listFineTuneEvents
+    - apiVersions:
+      - null
+      description: Cancels the processing of the fine-tune job specified by the given
+        fine_tune_id.
+      discriminator: basic
+      exceptions:
+      - discriminator: basic
+        headers: []
+        statusCodes:
+        - default
+      groupName: ''
+      isOverload: false
+      method: POST
+      name: cancel_fine_tune
+      overloads: []
+      parameters:
+      - *id015
+      - clientName: fine_tune_id
+        description: The identity of this item.
+        implementation: Method
+        inOverload: false
+        location: path
+        optional: false
+        restApiName: fineTuneId
+        skipUrlEncoding: false
+        type: *id003
+      - clientDefaultValue: 2022-06-01-preview
+        clientName: api_version
+        description: The API version to use for this operation.
+        implementation: Client
+        inOverload: false
+        in_docstring: false
+        location: query
+        optional: false
+        restApiName: api-version
+        skipUrlEncoding: false
+        type: *id007
+      - checkClientInput: false
+        clientDefaultValue: application/json
+        clientName: accept
+        delimiter: null
+        description: Accept header.
+        explode: false
+        groupedBy: null
+        implementation: Method
+        inDocstring: true
+        inOverload: false
+        inOverriden: false
+        location: header
+        optional: false
+        restApiName: Accept
+        skipUrlEncoding: false
+        type: *id008
+      responses:
+      - discriminator: operation
+        headers: []
+        statusCodes:
+        - 200
+        type: *id030
+      summary: Cancels the processing of the fine-tune job specified by the given
+        fine_tune_id.
+      url: /fine-tunes/{fineTuneId}:cancel
+    - apiVersions:
+      - null
+      description: 'Gets a list of all models that are accessible by the Azure OpenAI
+
+        resource.
+
+        These include base models as well as all successfully completed
+
+        fine-tuned models owned by the Azure OpenAI resource.'
+      discriminator: basic
+      exceptions:
+      - discriminator: basic
+        headers: []
+        statusCodes:
+        - default
+      groupName: ''
+      isOverload: false
+      method: GET
+      name: list_models
+      overloads: []
+      parameters:
+      - *id015
+      - clientDefaultValue: 2022-06-01-preview
+        clientName: api_version
+        description: The API version to use for this operation.
+        implementation: Client
+        inOverload: false
+        in_docstring: false
+        location: query
+        optional: false
+        restApiName: api-version
+        skipUrlEncoding: false
+        type: *id007
+      - checkClientInput: false
+        clientDefaultValue: application/json
+        clientName: accept
+        delimiter: null
+        description: Accept header.
+        explode: false
+        groupedBy: null
+        implementation: Method
+        inDocstring: true
+        inOverload: false
+        inOverriden: false
+        location: header
+        optional: false
+        restApiName: Accept
+        skipUrlEncoding: false
+        type: *id008
+      responses:
+      - discriminator: operation
+        headers: []
+        statusCodes:
+        - 200
+        type: &id056
+          base: dpg
+          description: ModelList.
+          discriminatedSubtypes: {}
+          name: ModelList
+          parents: []
+          properties:
+          - clientName: object
+            description: Defines the type of this object.
+            optional: true
+            readonly: false
+            restApiName: object
+            type: &id057
+              type: constant
+              value: model
+              valueType:
+                type: string
+          - clientName: data
+            description: The list of Models.
+            optional: true
+            readonly: false
+            restApiName: data
+            type: &id061
+              elementType: &id058
+                base: dpg
+                description: A model is either a base model or the result of a successful
+                  fine tune job.
+                discriminatedSubtypes: {}
+                name: Model
+                parents: []
+                properties:
+                - clientName: object
+                  description: Defines the type of an object.
+                  optional: true
+                  readonly: true
+                  restApiName: object
+                  type: *id010
+                - clientName: status
+                  description: The state of a job or item.
+                  optional: true
+                  readonly: true
+                  restApiName: status
+                  type: *id011
+                - clientName: created_at
+                  description: A timestamp when this job or item was created (in unix
+                    epochs).
+                  optional: true
+                  readonly: true
+                  restApiName: created_at
+                  type: *id002
+                - clientName: updated_at
+                  description: A timestamp when this job or item was modified last
+                    (in unix epochs).
+                  optional: true
+                  readonly: true
+                  restApiName: updated_at
+                  type: *id002
+                - clientName: id
+                  description: The identity of this item.
+                  optional: false
+                  pylintDisable: redefined-builtin
+                  readonly: true
+                  restApiName: id
+                  type: *id003
+                - clientName: model
+                  description: The base model ID if this is a fine tune model; otherwise
+                    ``null``.
+                  optional: true
+                  readonly: true
+                  restApiName: model
+                  type: *id003
+                - clientName: fine_tune
+                  description: The fine tune job ID if this is a fine tune model;
+                    otherwise ``null``.
+                  optional: true
+                  readonly: true
+                  restApiName: fine_tune
+                  type: *id003
+                - clientName: capabilities
+                  description: The capabilities of a base or fine tune model.
+                  optional: true
+                  readonly: false
+                  restApiName: capabilities
+                  type: &id031
+                    base: dpg
+                    description: The capabilities of a base or fine tune model.
+                    discriminatedSubtypes: {}
+                    name: Capabilities
+                    parents: []
+                    properties:
+                    - clientName: fine_tune
+                      description: A value indicating whether a model can be used
+                        for fine tuning.
+                      optional: true
+                      readonly: true
+                      restApiName: fine_tune
+                      type: *id029
+                    - clientName: inference
+                      description: A value indicating whether a model can be deployed.
+                      optional: true
+                      readonly: true
+                      restApiName: inference
+                      type: *id029
+                    - clientName: completion
+                      description: A value indicating whether a model supports completion.
+                      optional: true
+                      readonly: true
+                      restApiName: completion
+                      type: *id029
+                    - clientName: embeddings
+                      description: A value indicating whether a model supports embeddings.
+                      optional: true
+                      readonly: true
+                      restApiName: embeddings
+                      type: *id029
+                    - clientName: scale_types
+                      description: The supported scale types for deployments of this
+                        model.
+                      optional: true
+                      readonly: true
+                      restApiName: scale_types
+                      type: &id060
+                        elementType: &id059
+                          type: string
+                        type: list
+                    snakeCaseName: capabilities
+                    type: model
+                - clientName: deprecation
+                  description: 'Defines the dates of deprecation for the different
+                    use cases of a
+
+                    model.
+
+                    Usually base models support 1 year of fine tuning after creation.
+
+                    Inference is typically supported 2 years after creation of base
+                    or
+
+                    fine tuned
+
+                    models. The exact dates are specified in the properties.'
+                  optional: true
+                  readonly: false
+                  restApiName: deprecation
+                  type: &id032
+                    base: dpg
+                    description: 'Defines the dates of deprecation for the different
+                      use cases of a
+
+                      model.
+
+                      Usually base models support 1 year of fine tuning after creation.
+
+                      Inference is typically supported 2 years after creation of base
+                      or
+
+                      fine tuned
+
+                      models. The exact dates are specified in the properties.'
+                    discriminatedSubtypes: {}
+                    name: Deprecation
+                    parents: []
+                    properties:
+                    - clientName: fine_tune_end_date
+                      description: 'The end date of fine tune support of this model.
+                        Will be ``null`` for fine tune
+
+                        models.'
+                      optional: true
+                      readonly: true
+                      restApiName: fine_tune_end_date
+                      type: *id002
+                    - clientName: inference
+                      description: The end date of inference support of this model.
+                      optional: true
+                      readonly: true
+                      restApiName: inference
+                      type: *id002
+                    snakeCaseName: deprecation
+                    type: model
+                snakeCaseName: model
+                type: model
+              type: list
+          snakeCaseName: model_list
+          type: model
+      summary: 'Gets a list of all models that are accessible by the Azure OpenAI
+
+        resource.
+
+        These include base models as well as all successfully completed
+
+        fine-tuned models owned by the Azure OpenAI resource.'
+      url: /models
+    - apiVersions:
+      - null
+      description: Gets details for the model specified by the given model_id.
+      discriminator: basic
+      exceptions:
+      - discriminator: basic
+        headers: []
+        statusCodes:
+        - default
+      groupName: ''
+      isOverload: false
+      method: GET
+      name: get_model
+      overloads: []
+      parameters:
+      - *id015
+      - clientName: model_id
+        description: The identity of this item.
+        implementation: Method
+        inOverload: false
+        location: path
+        optional: false
+        restApiName: model_id
+        skipUrlEncoding: false
+        type: *id003
+      - clientDefaultValue: 2022-06-01-preview
+        clientName: api_version
+        description: The API version to use for this operation.
+        implementation: Client
+        inOverload: false
+        in_docstring: false
+        location: query
+        optional: false
+        restApiName: api-version
+        skipUrlEncoding: false
+        type: *id007
+      - checkClientInput: false
+        clientDefaultValue: application/json
+        clientName: accept
+        delimiter: null
+        description: Accept header.
+        explode: false
+        groupedBy: null
+        implementation: Method
+        inDocstring: true
+        inOverload: false
+        inOverriden: false
+        location: header
+        optional: false
+        restApiName: Accept
+        skipUrlEncoding: false
+        type: *id008
+      responses:
+      - discriminator: operation
+        headers: []
+        statusCodes:
+        - 200
+        type: &id062
+          base: dpg
+          description: Model.
+          discriminatedSubtypes: {}
+          name: Model
+          parents: []
+          properties:
+          - clientName: object
+            description: Defines the type of an object.
+            optional: true
+            readonly: true
+            restApiName: object
+            type: *id010
+          - clientName: status
+            description: The state of a job or item.
+            optional: true
+            readonly: true
+            restApiName: status
+            type: *id011
+          - clientName: created_at
+            description: A timestamp when this job or item was created (in unix epochs).
+            optional: true
+            readonly: true
+            restApiName: created_at
+            type: *id002
+          - clientName: updated_at
+            description: A timestamp when this job or item was modified last (in unix
+              epochs).
+            optional: true
+            readonly: true
+            restApiName: updated_at
+            type: *id002
+          - clientName: id
+            description: The identity of this item.
+            optional: false
+            pylintDisable: redefined-builtin
+            readonly: true
+            restApiName: id
+            type: *id003
+          - clientName: model
+            description: The base model ID if this is a fine tune model; otherwise
+              ``null``.
+            optional: true
+            readonly: true
+            restApiName: model
+            type: *id003
+          - clientName: fine_tune
+            description: The fine tune job ID if this is a fine tune model; otherwise
+              ``null``.
+            optional: true
+            readonly: true
+            restApiName: fine_tune
+            type: *id003
+          - clientName: capabilities
+            description: The capabilities of a base or fine tune model.
+            optional: true
+            readonly: false
+            restApiName: capabilities
+            type: *id031
+          - clientName: deprecation
+            description: 'Defines the dates of deprecation for the different use cases
+              of a
+
+              model.
+
+              Usually base models support 1 year of fine tuning after creation.
+
+              Inference is typically supported 2 years after creation of base or
+
+              fine tuned
+
+              models. The exact dates are specified in the properties.'
+            optional: true
+            readonly: false
+            restApiName: deprecation
+            type: *id032
+          snakeCaseName: model
+          type: model
+      summary: Gets details for the model specified by the given model_id.
+      url: /models/{model_id}
+    propertyName: ''
+  parameters:
+  - *id015
+  - clientName: credential
+    description: Credential needed for the client to connect to Azure.
+    implementation: Client
+    inOverload: false
+    location: other
+    optional: false
+    restApiName: credential
+    skipUrlEncoding: true
+    type: &id034
+      policy:
+        key: apiKey
+        type: AzureKeyCredentialPolicy
+      type: Key
+  - *id033
+  url: '{endpoint}/openai'
+namespace: azure.openai
+subnamespaceToClients: {}
+types:
+- *id003
+- *id034
+- *id035
+- *id036
+- *id006
+- *id010
+- *id011
+- *id002
+- *id004
+- *id037
+- *id038
+- *id039
+- *id040
+- *id041
+- *id013
+- *id009
+- *id042
+- type: constant
+  value: application/merge-patch+json
+  valueType: *id016
+- *id043
+- *id044
+- *id017
+- *id019
+- *id023
+- *id020
+- *id018
+- *id045
+- *id046
+- *id047
+- *id022
+- *id021
+- *id048
+- *id049
+- *id030
+- *id050
+- *id051
+- *id027
+- *id025
+- *id024
+- *id029
+- *id052
+- *id053
+- *id028
+- *id026
+- *id054
+- *id055
+- *id056
+- *id057
+- *id058
+- *id031
+- *id059
+- *id060
+- *id032
+- *id061
+- *id062
+- *id001
+- *id007
+- *id008
+- *id063
+- *id064
+- *id065
+- *id066
+- *id067
