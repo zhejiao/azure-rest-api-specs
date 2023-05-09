@@ -297,50 +297,7 @@
           "description": "Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple items, for example, '\"avoid\": [\"highways\", \"tollRoads\"]'. Noted that tunnels are not supported for driving and walking mode.",
           "type": "array",
           "items": {
-            "type": "string",
-            "enum": [
-              "highways",
-              "tollRoads",
-              "ferries",
-              "minimizeHighways",
-              "minimizeTollRoads",
-              "tunnels",
-              "borderCrossings"
-            ],
-            "x-ms-enum": {
-              "name": "Avoid",
-              "modelAsString": true,
-              "values": [
-                {
-                  "value": "highways",
-                  "description": "Avoids the use of highways in the route.  `Note`:The parameter is available only for driving and walking mode."
-                },
-                {
-                  "value": "tollRoads",
-                  "description": "Avoids the use of toll roads in the route"
-                },
-                {
-                  "value": "ferries",
-                  "description": "Avoids the use of ferries in the route."
-                },
-                {
-                  "value": "minimizeHighways",
-                  "description": "Minimizes (tries to avoid) the use of highways in the route. Note: If you specify more than one option for a road type, then the most restrictive option is used. For example, if you set the avoid parameter to both highways and minimizeHighways, the highways option is used and all highways are avoided. `Note`:The parameter is available only for driving and walking mode"
-                },
-                {
-                  "value": "minimizeTollRoads",
-                  "description": "Minimizes (tries to avoid) the use of toll roads in the route. Note: If you specify more than one option for a road type, then the most restrictive option is used. For example, if you set the avoid parameter to both tollRoads and minimizeTollRoads, the tollRoads option is used and all toll roads are avoided."
-                },
-                {
-                  "value": "tunnels",
-                  "description": "Avoids the use of tunnels in the route. `Note`:The parameter is available only for truck mode"
-                },
-                {
-                  "value": "borderCrossings",
-                  "description": "Avoids crossing country borders in the route."
-                }
-              ]
-            }
+            "$ref": "#/definitions/AvoidItem"
           }
         },
         "routeOutputOptions": {
@@ -448,6 +405,53 @@
             "$ref": "#/definitions/AdminDistrict"
           }
         }
+      }
+    },
+    "AvoidItem": {
+      "x-internal-ref-name": "AvoidItem",
+      "description": "Avoids the specified road types.",
+      "enum": [
+        "highways",
+        "tollRoads",
+        "ferries",
+        "minimizeHighways",
+        "minimizeTollRoads",
+        "tunnels",
+        "borderCrossings"
+      ],
+      "x-ms-enum": {
+        "name": "Avoid",
+        "modelAsString": true,
+        "values": [
+          {
+            "value": "highways",
+            "description": "Avoids the use of highways in the route.  `Note`:The parameter is available only for driving and walking mode."
+          },
+          {
+            "value": "tollRoads",
+            "description": "Avoids the use of toll roads in the route"
+          },
+          {
+            "value": "ferries",
+            "description": "Avoids the use of ferries in the route."
+          },
+          {
+            "value": "minimizeHighways",
+            "description": "Minimizes (tries to avoid) the use of highways in the route. Note: If you specify more than one option for a road type, then the most restrictive option is used. For example, if you set the avoid parameter to both highways and minimizeHighways, the highways option is used and all highways are avoided. `Note`:The parameter is available only for driving and walking mode"
+          },
+          {
+            "value": "minimizeTollRoads",
+            "description": "Minimizes (tries to avoid) the use of toll roads in the route. Note: If you specify more than one option for a road type, then the most restrictive option is used. For example, if you set the avoid parameter to both tollRoads and minimizeTollRoads, the tollRoads option is used and all toll roads are avoided."
+          },
+          {
+            "value": "tunnels",
+            "description": "Avoids the use of tunnels in the route. `Note`:The parameter is available only for truck mode"
+          },
+          {
+            "value": "borderCrossings",
+            "description": "Avoids crossing country borders in the route."
+          }
+        ]
       }
     },
     "FeatureTypeEnum": {
