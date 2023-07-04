@@ -55,6 +55,14 @@ input-file:
 - Microsoft.DataProtection/stable/2023-05-01/dataprotection.json
 ```
 
+### Tag: package-preview-2023-04
+
+These settings apply only when `--tag=package-preview-2023-04` is specified on the command line.
+
+```yaml $(tag) == 'package-preview-2023-04'
+input-file:
+  - Microsoft.DataProtection/preview/2023-04-01-preview/dataprotection.json
+```
 ### Tag: package-2023-01
 
 These settings apply only when `--tag=package-2023-01` is specified on the command line.
@@ -77,7 +85,7 @@ input-file:
 
 These settings apply only when `--tag=package-preview-2022-11` is specified on the command line.
 
-```yaml $(tag) == 'package-preview-2022-11'
+``` yaml $(tag) == 'package-preview-2022-11'
 input-file:
   - Microsoft.DataProtection/preview/2022-11-01-preview/dataprotection.json
 ```
