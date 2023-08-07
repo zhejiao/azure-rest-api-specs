@@ -152,6 +152,12 @@
           "200": {
             "description": "Request was successful."
           },
+          "202": {
+            "description": "Experiment resource being processed",
+            "schema": {
+              "$ref": "./types/experiments.json#/definitions/experiment"
+            }
+          },
           "204": {
             "description": "Request was successful."
           },
@@ -244,6 +250,12 @@
               "$ref": "./types/experiments.json#/definitions/experiment"
             }
           },
+          "201": {
+            "description": "Experiment resource returned if request was successful.",
+            "schema": {
+              "$ref": "./types/experiments.json#/definitions/experiment"
+            }
+          },
           "default": {
             "description": "Error response returned if request was unsuccessful.",
             "schema": {
@@ -293,6 +305,12 @@
               "$ref": "./types/experiments.json#/definitions/experiment"
             }
           },
+          "202": {
+            "description": "Experiment resource being processed",
+            "schema": {
+              "$ref": "./types/experiments.json#/definitions/experiment"
+            }
+          },
           "default": {
             "description": "Error response returned if request was unsuccessful.",
             "schema": {
@@ -330,10 +348,7 @@
         ],
         "responses": {
           "202": {
-            "description": "Operation result returned if request was successful.",
-            "schema": {
-              "$ref": "./types/experiments.json#/definitions/experimentCancelOperationResult"
-            }
+            "description": "Operation result returned if request was successful."
           },
           "default": {
             "description": "Error response returned if request was unsuccessful.",
@@ -372,10 +387,7 @@
         ],
         "responses": {
           "202": {
-            "description": "Operation result returned if request was successful.",
-            "schema": {
-              "$ref": "./types/experiments.json#/definitions/experimentStartOperationResult"
-            }
+            "description": "Operation result returned if request was successful."
           },
           "default": {
             "description": "Error response returned if request was unsuccessful.",

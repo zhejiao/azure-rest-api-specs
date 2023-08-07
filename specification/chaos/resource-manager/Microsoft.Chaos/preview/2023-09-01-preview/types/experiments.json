@@ -115,6 +115,10 @@
         "steps",
         "selectors"
       ],
+      "provisioningState": {
+        "description": "The provisioning state of the experiment resource.",
+        "$ref": "./common.json#/definitions/provisioningState"
+      },
       "additionalProperties": false
     },
     "experimentListResult": {
@@ -487,40 +491,6 @@
         "type",
         "id"
       ],
-      "additionalProperties": false
-    },
-    "experimentCancelOperationResult": {
-      "type": "object",
-      "description": "Model that represents the result of a cancel Experiment operation.",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "String of the Experiment name.",
-          "readOnly": true
-        },
-        "statusUrl": {
-          "$ref": "./common.json#/definitions/url",
-          "description": "URL to retrieve the Experiment status.",
-          "readOnly": true
-        }
-      },
-      "additionalProperties": false
-    },
-    "experimentStartOperationResult": {
-      "type": "object",
-      "description": "Model that represents the result of a start Experiment operation.",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "String of the Experiment name.",
-          "readOnly": true
-        },
-        "statusUrl": {
-          "$ref": "./common.json#/definitions/url",
-          "description": "URL to retrieve the Experiment status.",
-          "readOnly": true
-        }
-      },
       "additionalProperties": false
     },
     "experimentStatus": {

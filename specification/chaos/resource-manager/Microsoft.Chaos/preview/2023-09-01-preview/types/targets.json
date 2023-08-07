@@ -37,6 +37,10 @@
     "targetProperties": {
       "type": "object",
       "description": "Model that represents the base Target properties model.",
+      "provisioningState": {
+        "description": "The provisioning state of the experiment resource.",
+        "$ref": "./common.json#/definitions/provisioningState"
+      },
       "properties": {},
       "additionalProperties": true
     },

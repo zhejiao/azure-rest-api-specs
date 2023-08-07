@@ -168,7 +168,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "202": {
             "description": "Target resource deletion was successful."
           },
           "204": {
@@ -226,7 +226,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "Target resource returned if request was successful.",
             "schema": {
               "$ref": "./types/targets.json#/definitions/target"

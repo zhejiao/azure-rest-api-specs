@@ -45,6 +45,11 @@
       ],
       "additionalProperties": false
     },
+    "provisioningState": {
+      "readOnly": true,
+      "type": "string",
+      "description": "The provisioning state, which only appears in the response."
+    },
     "url": {
       "type": "string",
       "description": "String that represents a URL.",
