@@ -26,9 +26,20 @@ These are the global settings for the BotService API.
 
 ``` yaml
 openapi-type: arm
-tag: package-2022-09
+tag: package-preview-2023-09
 ```
 
+
+### Tag: package-preview-2023-09
+
+These settings apply only when `--tag=package-preview-2023-09` is specified on the command line.
+
+```yaml $(tag) == 'package-preview-2023-09'
+input-file:
+  - Microsoft.BotService/preview/2023-09-15-preview/botservice.json
+  - Microsoft.BotService/preview/2023-09-15-preview/networksecurityperimeter.json
+  - Microsoft.BotService/preview/2023-09-15-preview/privatelinks.json
+```
 
 ### Tag: package-2022-09
 
