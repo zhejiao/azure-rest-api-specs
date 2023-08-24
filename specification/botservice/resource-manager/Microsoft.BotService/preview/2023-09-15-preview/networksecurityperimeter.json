@@ -178,7 +178,8 @@
         },
         "accessRulesVersion": {
           "description": "Current access rules version",
-          "type": "integer"
+          "type": "integer",
+          "format": "int64"
         },
         "accessRules": {
           "description": "List of Access Rules",
@@ -190,7 +191,8 @@
         },
         "diagnosticSettingsVersion": {
           "description": "Current diagnostic settings version",
-          "type": "integer"
+          "type": "integer",
+          "format": "int64"
         },
         "enabledLogCategories": {
           "type": "array",
