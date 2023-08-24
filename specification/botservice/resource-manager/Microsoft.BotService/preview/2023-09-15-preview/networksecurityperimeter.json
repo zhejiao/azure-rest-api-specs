@@ -49,27 +49,15 @@
       "readOnly": true,
       "properties": {
         "provisioningState": {
-          "description": "Provisioning state of Network Security Perimeter configuration propagation",
-          "enum": [
-            "Creating",
-            "Updating",
-            "Accepted",
-            "Succeeded",
-            "Failed",
-            "Deleting"
-          ],
-          "type": "string",
-          "x-ms-enum": {
-            "name": "NspProvisioningState",
-            "modelAsString": true
-          }
+          "type": "string"
         },
         "provisioningIssues": {
           "description": "List of Provisioning Issues if any",
           "type": "array",
           "items": {
             "$ref": "#/definitions/ProvisioningIssue"
-          }
+          },
+          "x-ms-identifiers": []
         },
         "networkSecurityPerimeter": {
           "$ref": "#/definitions/NetworkSecurityPerimeter"
@@ -129,7 +117,8 @@
               "type": "array",
               "items": {
                 "$ref": "#/definitions/NspAccessRule"
-              }
+              },
+              "x-ms-identifiers": []
             }
           }
         }
@@ -189,18 +178,19 @@
         },
         "accessRulesVersion": {
           "description": "Current access rules version",
-          "type": "string"
+          "type": "integer"
         },
         "accessRules": {
           "description": "List of Access Rules",
           "type": "array",
           "items": {
             "$ref": "#/definitions/NspAccessRule"
-          }
+          },
+          "x-ms-identifiers": []
         },
         "diagnosticSettingsVersion": {
           "description": "Current diagnostic settings version",
-          "type": "string"
+          "type": "integer"
         },
         "enabledLogCategories": {
           "type": "array",
