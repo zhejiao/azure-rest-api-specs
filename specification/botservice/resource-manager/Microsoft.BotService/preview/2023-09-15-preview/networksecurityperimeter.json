@@ -143,7 +143,7 @@
         }
       }
     },
-    "ResourceAssociation":{
+    "ResourceAssociation": {
       "description": "Information about resource association",
       "readOnly": true,
       "type": "object",
